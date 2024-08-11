@@ -16,7 +16,18 @@ export default function Home() {
       <Category />
 
       <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 2xl:grid-cols-4 gap-2 mt-2">
-
+        {filtedProdoucts.map((product) => (
+          <>
+            <BrowseItem
+              key={product.id}
+              image={product.image}
+              price={product.price}
+              title={product.title}
+              url={product.href}
+              description={product.description}
+            />
+          </>
+        ))}
       </div>
     </div>
   );

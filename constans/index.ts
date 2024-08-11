@@ -107,7 +107,6 @@ export const socialMedia = [
       label: "Sanity",
       route: "/browse/sanity",
     },
-    
   ];
 
   export const Products = [
