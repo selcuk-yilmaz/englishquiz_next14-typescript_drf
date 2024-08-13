@@ -1,9 +1,9 @@
 import axios from "../utils/axiosInstance";
-import { Quiz, Question, Category } from "../types/quizTypes";
+import { Quiz, Question, Category, Photo } from "../types/quizTypes";
 
-export const fetchQuizzes = async (): Promise<Quiz[]> => {
+export const fetchQuizzes = async (): Promise<Photo[]> => {
   const response = await axios.get("/quiz/photos/");
-  console.log(response)
+  console.log(response);
   return response.data;
 };
 

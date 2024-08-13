@@ -1,26 +1,34 @@
-import React from "react";
-import { Quiz } from "../../../types/quizTypes";
-import { fetchQuizzes } from "../../../actions/quizActions";
+import BrowseItem from "@/components/Browse/BrowseItem";
+import Category from "@/components/Category/Category";
+import { ModeToggle } from "@/components/ModeToggle";
+import { Button } from "@/components/ui/button";
+import { Products } from "@/constans";
 import Image from "next/image";
 
-const QuizPage = async () => {
-  const quizzes: Quiz[] = await fetchQuizzes();
-  console.log(quizzes);
+export default function Home() {
+  const filtedProdoucts = Products.filter((product) => {
+    return product;
+  });
+
+  filtedProdoucts.sort((a, b) => b.id - a.id);
   return (
-    <div>
-      <h1>Quiz List</h1>
-      <ul>
-        {quizzes.map((quiz) => (
-          <div key={quiz.id}>
-            <li>{quiz.name}</li>
-            <li>{quiz.description}</li>
-            <li>{quiz.url}</li>
-            <Image alt={quiz.name} src={quiz.url} width={500} height={500} />
-          </div>
+    <div className="mt-4">
+      <Category />
+
+      <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 2xl:grid-cols-4 gap-2 mt-2">
+        {filtedProdoucts.map((product) => (
+          <>
+            <BrowseItem
+              key={product.id}
+              image={product.image}
+              price={product.price}
+              title={product.title}
+              url={product.href}
+              description={product.description}
+            />
+          </>
         ))}
-      </ul>
+      </div>
     </div>
   );
-};
-
-export default QuizPage;
+}
