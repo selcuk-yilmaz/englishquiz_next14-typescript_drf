@@ -25,7 +25,7 @@ const Sidebar = () => {
           <Link href="/">
             <Image
               alt="Logo"
-              src="/pp.png"
+              src="/melo_avatar.jpg"
               className="rounded-full"
               width={160}
               height={160}

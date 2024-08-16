@@ -1,6 +1,6 @@
 import BrowseItem from "@/components/Browse/BrowseItem";
 import Category from "@/components/Category/Category";
-import { Products } from "@/constans";
+import { Products, Quizes } from "@/constans";
 import React from "react";
 
 interface BrowseDetailPageProps {
@@ -10,7 +10,7 @@ interface BrowseDetailPageProps {
 }
 
 const BrowseDetailPage = ({ params }: BrowseDetailPageProps) => {
-  const filtedProdoucts = Products.filter((product) => {
+  const filtedProdoucts = Quizes.filter((product) => {
     return product.tags.includes(params.slug);
   });
 

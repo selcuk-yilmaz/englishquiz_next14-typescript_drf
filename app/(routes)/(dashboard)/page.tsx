@@ -15,8 +15,8 @@ export default function Home() {
     <div className="mt-4">
       <Category />
 
-      <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 2xl:grid-cols-4 gap-2 mt-2">
-        {filtedProdoucts.map((product) => (
+      <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 2xl:grid-cols-4 gap-2 mt-2  min-h-screen bg-custom-image bg-cover bg-center">
+        {/* {filtedProdoucts.map((product) => (
           <>
             <BrowseItem
               key={product.id}
@@ -27,7 +27,7 @@ export default function Home() {
               description={product.description}
             />
           </>
-        ))}
+        ))} */}
       </div>
     </div>
   );
