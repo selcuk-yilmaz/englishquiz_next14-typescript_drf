@@ -1,9 +1,9 @@
 import React, { createContext, useContext, useState, useEffect } from "react";
-import { Quiz, Photo } from "../types/quizTypes";
+import { Quiz, Questions } from "../types/quizTypes";
 import { fetchQuizzes } from "../actions/quizActions";
 
 interface QuizContextType {
-  quizzes: Photo[];
+  quizzes: Questions[];
   loading: boolean;
   error: string | null;
 }
@@ -13,7 +13,7 @@ const QuizContext = createContext<QuizContextType | undefined>(undefined);
 export const QuizProvider: React.FC<{ children: React.ReactNode }> = ({
   children,
 }) => {
-  const [quizzes, setQuizzes] = useState<Photo[]>([]);
+  const [quizzes, setQuizzes] = useState<Questions[]>([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
 

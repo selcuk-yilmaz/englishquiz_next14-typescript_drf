@@ -35,9 +35,11 @@ export interface ResultOfQuiz {
   status: "poor" | "medium" | "normal" | "good" | "perfect";
 }
 
-export interface Photo {
+export interface Questions {
   id: number;
-  name: string;
-  description: string;
+  subject: string;
   url: string;
+  difficulty: string;
+  correct: string;
+  number_of_options: string;
 }

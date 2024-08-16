@@ -44,7 +44,8 @@ const config = {
         "accordion-up": "accordion-up 0.2s ease-out",
       },
       backgroundImage: {
-        "custom-image": "url('/question.png')",
+        "dark-image": "url('/question.png')",
+        "white-image": "url('/englishQuizBG.jpg')",
       },
     },
   },
