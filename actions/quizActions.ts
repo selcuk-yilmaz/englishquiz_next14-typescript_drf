@@ -3,7 +3,7 @@ import { Quiz, Question, Category, Questions } from "../types/quizTypes";
 
 export const fetchQuizzes = async (): Promise<Questions[]> => {
   const response = await axios.get("/api/questions/");
-  console.log(response);
+  // console.log(response);
   return response.data;
 };
 

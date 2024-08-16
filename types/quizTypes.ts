@@ -38,6 +38,7 @@ export interface ResultOfQuiz {
 export interface Questions {
   id: number;
   subject: string;
+  subject_title: string;
   url: string;
   difficulty: string;
   correct: string;
