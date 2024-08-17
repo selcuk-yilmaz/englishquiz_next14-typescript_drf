@@ -60,51 +60,51 @@ export const socialMedia = [
     },
     {
       label: "Grade-1",
-      route: "/browse/Grade-1",
+      route: "/browse/1",
     },
     {
       label: "Grade-2",
-      route: "/browse/Grade-2",
+      route: "/browse/2",
     },
     {
       label: "Grade-3",
-      route: "/browse/Grade-3",
+      route: "/browse/3",
     },
     {
       label: "Grade-4",
-      route: "/browse/Grade-4",
+      route: "/browse/4",
     },
     {
       label: "Grade-5",
-      route: "/browse/Grade-5",
+      route: "/browse/5",
     },
     {
       label: "Grade-6",
-      route: "/browse/Grade-6",
+      route: "/browse/6",
     },
     {
       label: "Grade-7",
-      route: "/browse/Grade-7",
+      route: "/browse/7",
     },
     {
       label: "Grade-8",
-      route: "/browse/Grade-8",
+      route: "/browse/8",
     },
     {
       label: "Grade-9",
-      route: "/browse/Grade-9",
+      route: "/browse/9",
     },
     {
       label: "Grade-10",
-      route: "/browse/Grade-10",
+      route: "/browse/10",
     },
     {
       label: "Grade-11",
-      route: "/browse/Grade-11",
+      route: "/browse/11",
     },
     {
       label: "Grade-12",
-      route: "/browse/Grade-12",
+      route: "/browse/12",
     },
     // {
     //   label: "Grade-12",

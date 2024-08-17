@@ -1,35 +1,34 @@
-import React from "react";
-import { Questions } from "../../../types/quizTypes";
-import { fetchQuizzes } from "../../../actions/quizActions";
-import Image from "next/image";
+import BrowseItem from "@/components/Browse/BrowseItem";
 import Category from "@/components/Category/Category";
+import { ModeToggle } from "@/components/ModeToggle";
+import { Button } from "@/components/ui/button";
+import { Products } from "@/constans";
+import Image from "next/image";
 
-const QuizPage = async () => {
-  const quizzesses: Questions[] = await fetchQuizzes();
-  console.log(quizzesses[0].subject_title);
+export default function Home() {
+  const filtedProdoucts = Products.filter((product) => {
+    return product;
+  });
+
+  filtedProdoucts.sort((a, b) => b.id - a.id);
   return (
     <div className="mt-4">
       <Category />
-      <h1>Quiz List</h1>
-      <span>Quiz Subject:</span>
-      <span>{quizzesses[0].subject_title}</span>
-      <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 2xl:grid-cols-4 gap-2 mt-2">
-        <ul>
-          {quizzesses.map((quiz) => (
-            <div key={quiz.id}>
-              <Image
-                alt={quiz.subject}
-                src={quiz.url}
-                width={500}
-                height={500}
-              />
-              <li>question difficulty level: {quiz.difficulty}</li>
-            </div>
-          ))}
-        </ul>
+
+      <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 2xl:grid-cols-4 gap-2 mt-2  min-h-screen bg-white-image dark:bg-dark-image bg-cover bg-center">
+        {/* {filtedProdoucts.map((product) => (
+          <>
+            <BrowseItem
+              key={product.id}
+              image={product.image}
+              price={product.price}
+              title={product.title}
+              url={product.href}
+              description={product.description}
+            />
+          </>
+        ))} */}
       </div>
     </div>
   );
-};
-
-export default QuizPage;
+}

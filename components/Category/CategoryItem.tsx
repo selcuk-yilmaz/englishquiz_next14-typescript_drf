@@ -5,26 +5,20 @@ import React from 'react'
 import { Button } from '../ui/button';
 import Link from 'next/link';
 
-interface CategoryItemProps{
-    href:string;
-    label:string;
-    
+interface CategoryItemProps {
+  route: string;
+  label: string;
 }
 
-const CategoryItem = ({href,label}:CategoryItemProps) => {
+const CategoryItem = ({ route, label }: CategoryItemProps) => {
+  const pathname = usePathname();
 
-    const pathname = usePathname();
-
-    const isActive = href === pathname
+  const isActive = route === pathname;
   return (
-   <Button asChild variant={isActive ? "secondary" : "outline"}>
-    <Link href={href}>
-        {label}
-    </Link>
-
-
-   </Button>
-  )
-}
+    <Button asChild variant={isActive ? "secondary" : "outline"}>
+      <Link href={route}>{label}</Link>
+    </Button>
+  );
+};
 
 export default CategoryItem

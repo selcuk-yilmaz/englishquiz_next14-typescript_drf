@@ -1,5 +1,5 @@
 import axios from "../utils/axiosInstance";
-import { Quiz, Question, Category, Questions } from "../types/quizTypes";
+import { Quiz, Question, Category, Questions, SelectedSubject, SelectedGrade } from "../types/quizTypes";
 
 export const fetchQuizzes = async (): Promise<Questions[]> => {
   const response = await axios.get("/api/questions/");
@@ -7,11 +7,19 @@ export const fetchQuizzes = async (): Promise<Questions[]> => {
   return response.data;
 };
 
-export const fetchQuizById = async (id: number): Promise<Quiz> => {
-  const response = await axios.get(`/quizzes/${id}/`);
+export const fetchQuizByGrade = async (id: number): Promise<SelectedGrade> => {
+  const response = await axios.get(`/api/grade/${id}/`);
+  return response.data;
+};
+export const fetchQuizBySubject = async (
+  subject: string
+): Promise<SelectedSubject> => {
+  const response = await axios.get(`/api/subject/${subject}/`);
   return response.data;
 };
 
+
+//!belows are example
 export const createQuiz = async (quiz: Quiz): Promise<Quiz> => {
   const response = await axios.post("/quizzes/", quiz);
   return response.data;
