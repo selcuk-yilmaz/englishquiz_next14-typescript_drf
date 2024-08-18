@@ -1,14 +1,18 @@
-import Browse from "@/components/Browse/Browse";
+import BrowseGrade from "@/components/Browse/BrowseGrade";
 import Category from "@/components/Category/Category";
 import React from "react";
 
-const BrowseDetailPage = () => {
+// Dinamik rota parametrelerini props olarak alıyoruz
+const BrowseDetailPage = ({ params }: { params: { slug: number } }) => {
+  const { slug } = params;
+
+
   return (
     <div className="mt-4">
       <Category />
 
-      <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 2xl:grid-cols-4 gap-2 mt-2">
-        <Browse/>
+      <div className="grid grid-cols-1 gap-2 mt-2 border-2 border-rose-500">
+        <BrowseGrade slug={slug} />
       </div>
     </div>
   );

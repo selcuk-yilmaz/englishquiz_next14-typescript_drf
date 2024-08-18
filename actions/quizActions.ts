@@ -7,13 +7,13 @@ export const fetchQuizzes = async (): Promise<Questions[]> => {
   return response.data;
 };
 
-export const fetchQuizByGrade = async (id: number): Promise<SelectedGrade> => {
+export const fetchQuizByGrade = async (id: number): Promise<SelectedGrade[]> => {
   const response = await axios.get(`/api/grade/${id}/`);
   return response.data;
 };
 export const fetchQuizBySubject = async (
   subject: string
-): Promise<SelectedSubject> => {
+): Promise<SelectedSubject[]> => {
   const response = await axios.get(`/api/subject/${subject}/`);
   return response.data;
 };

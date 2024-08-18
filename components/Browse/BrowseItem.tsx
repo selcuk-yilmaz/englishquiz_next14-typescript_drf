@@ -23,22 +23,24 @@ import { Badge } from "../ui/badge";
 
 interface BrowseItemProps {
   title: string;
+  grade: number;
   image: string;
-  url: string;
-  price: string;
-  description?: string;
+  difficulty: string;
+  correct: string;
+  number_of_options: string;
 }
 
 const BrowseItem = ({
-  image,
-  price,
   title,
-  url,
-  description,
+  grade,
+  image,
+  difficulty,
+  correct,
+  number_of_options,
 }: BrowseItemProps) => {
   return (
     <div className="col-span-1">
-      <Link href={url}>
+      <Link href={`/quizes/${title}`}>
         <Card>
           {/* <CardHeader className="relative w-full h-[500px]"></CardHeader> */}
           <CardHeader>
@@ -52,7 +54,7 @@ const BrowseItem = ({
             <p className="mt-2 text-base font-semibold">{title}</p>
           </CardHeader>
           <CardContent>
-            <Badge>{price}</Badge>
+            <Badge>{title}</Badge>
           </CardContent>
         </Card>
       </Link>
