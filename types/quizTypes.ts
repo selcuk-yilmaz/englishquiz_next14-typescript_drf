@@ -45,6 +45,10 @@ export interface Questions {
   number_of_options: string;
 }
 
+export interface Grade {
+  id: number;
+  level: number;
+}
 export interface SelectedGrade {
   id: number;
   lesson_name: string;
@@ -56,7 +60,6 @@ export interface SelectedSubject {
   id: number;
   subject: string;
   subject_title: string;
-  grade:number;
   url: string;
   difficulty: string;
   correct: string;

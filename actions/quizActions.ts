@@ -1,8 +1,8 @@
 import axios from "../utils/axiosInstance";
-import { Quiz, Question, Category, Questions, SelectedSubject, SelectedGrade } from "../types/quizTypes";
+import { Quiz, Question, Category, Questions, SelectedSubject, SelectedGrade, Grade } from "../types/quizTypes";
 
-export const fetchQuizzes = async (): Promise<Questions[]> => {
-  const response = await axios.get("/api/questions/");
+export const fetchGrades = async (): Promise<Grade[]> => {
+  const response = await axios.get("/api/grade/");
   // console.log(response);
   return response.data;
 };
@@ -11,12 +11,30 @@ export const fetchQuizByGrade = async (id: number): Promise<SelectedGrade[]> => 
   const response = await axios.get(`/api/grade/${id}/`);
   return response.data;
 };
+
 export const fetchQuizBySubject = async (
-  subject: string
+  slug: string
 ): Promise<SelectedSubject[]> => {
-  const response = await axios.get(`/api/subject/${subject}/`);
+  try {
+    const response = await axios.get(`/api/subject/${slug}/`);
+    return response.data;
+  } catch (error: any) {
+    if (error.response && error.response.status === 404) {
+      console.error(`Subject with slug "${slug}" not found.`);
+    }
+    throw error; // rethrow the error to be caught by your page component
+  }
+};
+
+
+
+
+export const fetchQuizzes = async (): Promise<Questions[]> => {
+  const response = await axios.get("/api/questions/");
+  // console.log(response);
   return response.data;
 };
+
 
 
 //!belows are example

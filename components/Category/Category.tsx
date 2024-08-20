@@ -1,12 +1,15 @@
 import { BrowseCategory } from '@/constans'
 import React from 'react'
 import CategoryItem from './CategoryItem'
+import { fetchGrades } from '@/actions/quizActions';
+import { Grade } from '@/types/quizTypes';
 
-const Category = () => {
+const Category = async () => {
+  const grades: Grade[] = await fetchGrades();
   return (
     <div className="flex items-center gap-1 flex-wrap">
-      {BrowseCategory.map((item) => (
-        <CategoryItem key={item.route} route={item.route} label={item.label} />
+      {grades.map((item) => (
+        <CategoryItem key={item.id} level={item.level} id={item.id} />
       ))}
     </div>
   );
