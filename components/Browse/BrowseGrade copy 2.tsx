@@ -19,15 +19,18 @@ const BrowseGrade: React.FC<BrowseProps> = async ({ slug }) => {
 
   return (
     <div className="mt-4">
+
       <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 2xl:grid-cols-4 gap-2 mt-2">
         {quizzesByGrade?.map((product) => (
           <div key={product.id}>
             <BrowseItem
-              id={product.id}
-              lesson_name={product.lesson_name}
-              grade_level={product.grade_level}
-              title={product.title}
-              question_count={product.question_count}
+              key={product.id}
+              title={product.subject_title}
+              grade={product.grade}
+              image={product.url}
+              difficulty={product.difficulty}
+              correct={product.correct}
+              number_of_options={product.number_of_options}
             />
           </div>
         ))}

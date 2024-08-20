@@ -22,19 +22,21 @@ import Image from "next/image";
 import { Badge } from "../ui/badge";
 
 interface BrowseItemProps {
-  id: number;
-  lesson_name: string;
-  grade_level: number;
   title: string;
-  question_count: number;
+  grade: number;
+  image: string;
+  difficulty: string;
+  correct: string;
+  number_of_options: string;
 }
 
 const BrowseItem = ({
-  id,
-  lesson_name,
-  grade_level,
   title,
-  question_count
+  grade,
+  image,
+  difficulty,
+  correct,
+  number_of_options,
 }: BrowseItemProps) => {
   return (
     <div className="col-span-1">
@@ -49,19 +51,9 @@ const BrowseItem = ({
               height={500}
               style={{ objectFit: "cover" }}
             /> */}
-            <p className="mt-2 text-base font-semibold">
-              lesson_name: {lesson_name}
-            </p>
-            <p className="mt-2 text-base font-semibold">konu: {title}</p>
-            <p className="mt-2 text-base font-semibold">
-              sınıf: {grade_level}
-            </p>
-            <p className="mt-2 text-base font-semibold">
-              soru sayısı: {question_count}
-            </p>
+            <p className="mt-2 text-base font-semibold">{title}</p>
           </CardHeader>
           <CardContent>
-            <span>konu</span>
             <Badge>{title}</Badge>
           </CardContent>
         </Card>

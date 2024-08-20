@@ -44,17 +44,15 @@ export interface Questions {
   correct: string;
   number_of_options: string;
 }
-export interface SelectedSubject {
-  id: number;
-  subject: string;
-  subject_title: string;
-  grade:number;
-  url: string;
-  difficulty: string;
-  correct: string;
-  number_of_options: string;
-}
+
 export interface SelectedGrade {
+  id: number;
+  lesson_name: string;
+  grade_level: number;
+  title: string;
+  question_count: number;
+}
+export interface SelectedSubject {
   id: number;
   subject: string;
   subject_title: string;
