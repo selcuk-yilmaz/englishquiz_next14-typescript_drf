@@ -65,3 +65,19 @@ export interface SelectedSubject {
   correct: string;
   number_of_options: string;
 }
+export interface QuizSelectedSubj {
+  id: number;
+  subject: number;
+  subject_title: string;
+  url: string;
+  difficulty: string;
+  correct: string;
+  number_of_options: string;
+}
+
+export interface QuizResponse {
+  count: number;
+  next: string | null;
+  previous: string | null;
+  results: QuizSelectedSubj[];
+}

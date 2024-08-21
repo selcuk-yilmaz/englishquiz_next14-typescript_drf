@@ -48,13 +48,13 @@ const BrowseItem = ({
         </CardHeader>
         <CardContent>
           <ToggleGroup type="single">
-            <Link href={`/quizes/${title}`}>
+            <Link href={`/quizes/${title}/10`}>
               <ToggleGroupItem value="a">TEST-1</ToggleGroupItem>
             </Link>
-            <Link href={`/quizes/${title}`}>
+            <Link href={`/quizes/${title}/20`}>
               <ToggleGroupItem value="b">TEST-2</ToggleGroupItem>
             </Link>
-            <Link href={`/quizes/${title}`}>
+            <Link href={`/quizes/${title}/30`}>
               <ToggleGroupItem value="c">TEST-3</ToggleGroupItem>
             </Link>
           </ToggleGroup>

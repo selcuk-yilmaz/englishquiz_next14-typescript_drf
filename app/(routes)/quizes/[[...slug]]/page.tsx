@@ -6,7 +6,7 @@ import React from "react";
 // Dinamik rota parametrelerini props olarak alıyoruz
 const Quiz = ({ params }: { params: { slug: string } }) => {
   const { slug } = params;
-
+console.log("slug", slug)
   return (
     <div className="mt-4">
       <Category />
