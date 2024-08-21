@@ -18,8 +18,8 @@ const BrowseGrade: React.FC<BrowseProps> = async ({ slug }) => {
   //   const quizzesBySubject: SelectedSubject = await fetchQuizBySubject("flags");
 
   return (
-    <div className="mt-4">
-      <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 2xl:grid-cols-4 gap-2 mt-2">
+    <div className="">
+      <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 2xl:grid-cols-4 gap-2">
         {quizzesByGrade?.map((product) => (
           <div key={product.id}>
             <BrowseItem

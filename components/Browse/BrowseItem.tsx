@@ -20,7 +20,8 @@ import {
 import Link from "next/link";
 import Image from "next/image";
 import { Badge } from "../ui/badge";
-
+import { Bold, Italic, Underline } from "lucide-react";
+import { ToggleGroup, ToggleGroupItem } from "@/components/ui/toggle-group";
 interface BrowseItemProps {
   id: number;
   lesson_name: string;
@@ -34,38 +35,35 @@ const BrowseItem = ({
   lesson_name,
   grade_level,
   title,
-  question_count
+  question_count,
 }: BrowseItemProps) => {
   return (
     <div className="col-span-1">
-      <Link href={`/quizes/${title}`}>
-        <Card>
-          {/* <CardHeader className="relative w-full h-[500px]"></CardHeader> */}
-          <CardHeader>
-            {/* <Image
-              alt={title}
-              src={image}
-              width={500}
-              height={500}
-              style={{ objectFit: "cover" }}
-            /> */}
-            <p className="mt-2 text-base font-semibold">
-              lesson_name: {lesson_name}
-            </p>
-            <p className="mt-2 text-base font-semibold">konu: {title}</p>
-            <p className="mt-2 text-base font-semibold">
-              sınıf: {grade_level}
-            </p>
-            <p className="mt-2 text-base font-semibold">
-              soru sayısı: {question_count}
-            </p>
-          </CardHeader>
-          <CardContent>
-            <span>konu</span>
-            <Badge>{title}</Badge>
-          </CardContent>
-        </Card>
-      </Link>
+      <Card className="">
+        <CardHeader className="">
+          <p className="mt-2 text-base font-semibold">SUBJECT: {title}</p>
+          <p className="mt-2 text-base font-semibold">
+            QUESTİON COUNT: {question_count}
+          </p>
+        </CardHeader>
+        <CardContent>
+          <ToggleGroup type="single">
+            <Link href={`/quizes/${title}`}>
+              <ToggleGroupItem value="a">TEST-1</ToggleGroupItem>
+            </Link>
+            <Link href={`/quizes/${title}`}>
+              <ToggleGroupItem value="b">TEST-2</ToggleGroupItem>
+            </Link>
+            <Link href={`/quizes/${title}`}>
+              <ToggleGroupItem value="c">TEST-3</ToggleGroupItem>
+            </Link>
+          </ToggleGroup>
+        </CardContent>
+        {/* <CardContent>
+          <span>konu</span>
+          <Badge>{title}</Badge>
+        </CardContent> */}
+      </Card>
     </div>
   );
 };
