@@ -1,25 +1,11 @@
-import React from "react";
-import { Button } from "@/components/ui/button";
-import {
-  Card,
-  CardContent,
-  CardDescription,
-  CardFooter,
-  CardHeader,
-  CardTitle,
-} from "@/components/ui/card";
-import { Input } from "@/components/ui/input";
-import { Label } from "@/components/ui/label";
-import {
-  Select,
-  SelectContent,
-  SelectItem,
-  SelectTrigger,
-  SelectValue,
-} from "@/components/ui/select";
-import Link from "next/link";
+"use client";
+
+import React, { useState, useEffect } from "react";
+import { Card, CardContent, CardHeader } from "@/components/ui/card";
 import Image from "next/image";
-import { Badge } from "../ui/badge";
+import { Badge } from "@/components/ui/badge";
+import RadioGroupForm from "./RadioGroupForm";
+import { useQuizContext } from "@/context/QuizContext";
 
 interface QuizesItemProps {
   id: number;
@@ -34,29 +20,55 @@ const QuizesPageItem = ({
   difficulty,
   url,
 }: QuizesItemProps) => {
+  const { studentResponses, setStudentResponses } = useQuizContext();
+
+  const handleAnswerSubmit = (data: { selectedOption: string }) => {
+    setStudentResponses((prevResponses) => {
+      const existingResponseIndex = prevResponses.findIndex(
+        (response) => response.id === id
+      );
+
+      if (existingResponseIndex >= 0) {
+        const updatedResponses = [...prevResponses];
+        updatedResponses[existingResponseIndex] = {
+          id,
+          selectedOption: data.selectedOption,
+        };
+        return updatedResponses;
+      } else {
+        return [...prevResponses, { id, selectedOption: data.selectedOption }];
+      }
+    });
+  };
+
+  // useEffect to log studentResponses after each update
+  useEffect(() => {
+    console.log(studentResponses);
+  }, [studentResponses]); // Runs every time studentResponses changes
+
   return (
     <div className="col-span-1">
-      {/* <Link href={"/"}> */}
-        <Card>
-          {/* <CardHeader className="relative w-full h-[500px]"></CardHeader> */}
-          <CardHeader>
-            <Image
-              alt={subject_title}
-              src={url}
-              width={500}
-              height={500}
-              style={{ objectFit: "cover" }}
-            />
-            <p className="mt-2 text-base font-semibold">
-              Subject: {subject_title}
-            </p>
-          </CardHeader>
-          <CardContent>
-            <span>Difficulty degree </span>
-            <Badge>{difficulty}</Badge>
-          </CardContent>
-        </Card>
-      {/* </Link> */}
+      <Card>
+        <CardHeader>
+          <Image
+            alt={subject_title}
+            src={url}
+            width={500}
+            height={500}
+            style={{ objectFit: "cover" }}
+          />
+          <p className="mt-2 text-base font-semibold">
+            Subject: {subject_title}
+          </p>
+        </CardHeader>
+        <CardContent>
+          <span>Difficulty degree </span>
+          <Badge>{difficulty}</Badge>
+
+          {/* Çoktan seçmeli quiz formu */}
+          <RadioGroupForm onSubmitAnswer={handleAnswerSubmit} />
+        </CardContent>
+      </Card>
     </div>
   );
 };

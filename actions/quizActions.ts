@@ -9,19 +9,20 @@ import {
   QuizResponse,
 } from "../types/quizTypes";
 
+//! get grades info for category component
 export const fetchGrades = async (): Promise<Grade[]> => {
   const response = await axios.get("/api/grade/");
   // console.log(response);
   return response.data;
 };
-
+//! get questions info according to grade
 export const fetchQuizByGrade = async (
   id: number
 ): Promise<SelectedGrade[]> => {
   const response = await axios.get(`/api/grade/${id}/`);
   return response.data;
 };
-
+//! get questions according to subject
 export const fetchQuizBySubject = async (
   slug: string
 ): Promise<QuizResponse> => {
@@ -46,15 +47,36 @@ export const fetchQuizBySubject = async (
   }
 };
 
+//! post student responses to be for calculate
+interface StudentResponse {
+  id: number;
+  selectedOption: string;
+}
+
+interface PostResponsesPayload {
+  studentResponses: StudentResponse[];
+}
+
+export const postStudentResponses = async (
+  studentResponses: StudentResponse[]
+): Promise<any> => {
+  const payload: PostResponsesPayload = { studentResponses };
+
+  try {
+    const response = await axios.post("/api/result", payload);
+    return response.data;
+  } catch (error) {
+    console.error("Failed to post student responses", error);
+    throw error;
+  }
+};
+
+
+
+//!belows are example
 export const fetchQuizzes = async (): Promise<Questions[]> => {
   const response = await axios.get("/api/questions/");
   // console.log(response);
-  return response.data;
-};
-
-//!belows are example
-export const createQuiz = async (quiz: Quiz): Promise<Quiz> => {
-  const response = await axios.post("/quizzes/", quiz);
   return response.data;
 };
 
