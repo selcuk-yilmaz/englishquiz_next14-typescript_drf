@@ -14,6 +14,7 @@ interface QuizContextType {
   error: string | null;
   studentResponses: StudentResponse[];
   setStudentResponses: React.Dispatch<React.SetStateAction<StudentResponse[]>>;
+  handleSubmitPost: () => Promise<void>; // Add this line
 }
 
 const QuizContext = createContext<QuizContextType | undefined>(undefined);
@@ -24,12 +25,6 @@ export const QuizProvider: React.FC<{ children: React.ReactNode }> = ({
   const [quizzes, setQuizzes] = useState<Questions[]>([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
-
-  // Define state to store student responses
-  const [studentResponses, setStudentResponses] = useState<StudentResponse[]>(
-    []
-  );
-
   useEffect(() => {
     const loadQuizzes = async () => {
       try {
@@ -44,11 +39,14 @@ export const QuizProvider: React.FC<{ children: React.ReactNode }> = ({
 
     loadQuizzes();
   }, []);
-//! below is post student responses for be
+  //! below is post student responses for be
+  // Define state to store student responses
+  const [studentResponses, setStudentResponses] = useState<StudentResponse[]>(
+    []
+  );
   useEffect(() => {
     console.log(studentResponses);
   }, [studentResponses]);
-
 
   const handleSubmitPost = async () => {
     try {
@@ -61,7 +59,14 @@ export const QuizProvider: React.FC<{ children: React.ReactNode }> = ({
 
   return (
     <QuizContext.Provider
-      value={{ quizzes, loading, error, studentResponses, setStudentResponses }}
+      value={{
+        quizzes,
+        loading,
+        error,
+        studentResponses,
+        setStudentResponses,
+        handleSubmitPost,
+      }}
     >
       {children}
     </QuizContext.Provider>

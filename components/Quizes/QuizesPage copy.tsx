@@ -1,19 +1,20 @@
-"use client";
-
-import React, { useEffect, useState } from "react";
+import {
+  fetchQuizByGrade,
+  fetchQuizBySubject,
+  fetchQuizzes,
+} from "@/actions/quizActions";
+import {
+  QuizResponse,
+} from "@/types/quizTypes";
+import React from "react";
 import QuizesPageItem from "./QuizesPageItem";
 import { Button } from "../ui/button";
 import { useQuizContext } from "@/context/QuizContext";
-import { fetchQuizBySubject } from "@/actions/quizActions";
-import { QuizResponse } from "@/types/quizTypes";
-
 interface BrowseProps {
   slug: string;
 }
 
-// SEO Metadata function
-export async function generateMetadata({ params }: { params: BrowseProps }) {
-  const { slug } = params;
+export async function generateMetadata({ slug }: BrowseProps) {
   const data: QuizResponse = await fetchQuizBySubject(slug);
   const quizData = data.results;
 
@@ -30,42 +31,31 @@ export async function generateMetadata({ params }: { params: BrowseProps }) {
   };
 }
 
-const QuizesPage: React.FC<BrowseProps> = ({ slug }) => {
+const QuizesPage: React.FC<BrowseProps> = async ({ slug }) => {
   const { handleSubmitPost } = useQuizContext();
-  const [quizData, setQuizData] = useState<QuizResponse["results"]>([]);
-  const [loading, setLoading] = useState(true);
-  const [error, setError] = useState<string | null>(null);
-
-  useEffect(() => {
-    const loadQuizData = async () => {
-      try {
-        const data: QuizResponse = await fetchQuizBySubject(slug);
-        console.log(data.results);
-        setQuizData(data.results);
-      } catch (err) {
-        setError("Failed to load quizzes");
-      } finally {
-        setLoading(false);
-      }
-    };
-
-    loadQuizData();
-  }, [slug]);
-
-  if (loading) {
-    return <div>Loading...</div>;
-  }
-
-  if (error || !quizData || quizData.length === 0) {
+  const data: QuizResponse = await fetchQuizBySubject(slug);
+  const quizData = data.results;
+  if (!quizData || quizData.length === 0) {
     return (
       <div className="flex justify-center items-center text-base font-semibold">
         THIS QUIZ HAS NOT BEEN UPLOADED YET
       </div>
     );
   }
+  const jsonLd = {
+    "@context": "https://schema.org",
+    "@type": "quizData",
+    title: quizData[0].subject_title,
+    name: quizData[0].difficulty,
+    image: quizData[0].url,
+  };
 
   return (
     <div className="mt-4">
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
+      />
       <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 2xl:grid-cols-4 gap-2 mt-2">
         {quizData.map((question) => (
           <div key={question.id}>
@@ -80,11 +70,11 @@ const QuizesPage: React.FC<BrowseProps> = ({ slug }) => {
       </div>
       <div
         className="bg-mycolor-400 dark:bg-mycolor-100 border-b-2
-      dark:border-b-mycolor-400/30 h-16 mx-auto flex justify-end pr-2 items-center"
+    dark:border-b-mycolor-400/30 h-16 mx-auto flex justify-end pr-2 items-center"
       >
         <div className="justify-end items-center">
           <Button variant="mybutton" onClick={handleSubmitPost}>
-            Complete the Quiz
+            Complate the Quiz
           </Button>
         </div>
       </div>

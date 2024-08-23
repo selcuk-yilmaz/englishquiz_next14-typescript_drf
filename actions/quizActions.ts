@@ -63,7 +63,7 @@ export const postStudentResponses = async (
   const payload: PostResponsesPayload = { studentResponses };
 
   try {
-    const response = await axios.post("/api/result", payload);
+    const response = await axios.post("/api/results/", payload);
     return response.data;
   } catch (error) {
     console.error("Failed to post student responses", error);
