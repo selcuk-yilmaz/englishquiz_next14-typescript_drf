@@ -41,10 +41,10 @@ const QuizesPageItem = ({
     });
   };
 
-  // useEffect to log studentResponses after each update
-  useEffect(() => {
-    console.log(studentResponses);
-  }, [studentResponses]); // Runs every time studentResponses changes
+  // // useEffect to log studentResponses after each update
+  // useEffect(() => {
+  //   console.log(studentResponses);
+  // }, [studentResponses]); // Runs every time studentResponses changes
 
   return (
     <div className="col-span-1">

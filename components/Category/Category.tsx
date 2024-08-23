@@ -1,4 +1,3 @@
-import { BrowseCategory } from '@/constans'
 import React from 'react'
 import CategoryItem from './CategoryItem'
 import { fetchGrades } from '@/actions/quizActions';

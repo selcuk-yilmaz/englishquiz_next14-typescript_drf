@@ -6,7 +6,7 @@ import { Button } from "../ui/button";
 import { useQuizContext } from "@/context/QuizContext";
 import { fetchQuizBySubject } from "@/actions/quizActions";
 import { QuizResponse } from "@/types/quizTypes";
-
+import Link from "next/link";
 interface BrowseProps {
   slug: string;
 }
@@ -40,7 +40,7 @@ const QuizesPage: React.FC<BrowseProps> = ({ slug }) => {
     const loadQuizData = async () => {
       try {
         const data: QuizResponse = await fetchQuizBySubject(slug);
-        console.log(data.results);
+        // console.log(data.results);
         setQuizData(data.results);
       } catch (err) {
         setError("Failed to load quizzes");
@@ -83,9 +83,11 @@ const QuizesPage: React.FC<BrowseProps> = ({ slug }) => {
       dark:border-b-mycolor-400/30 h-16 mx-auto flex justify-end pr-2 items-center"
       >
         <div className="justify-end items-center">
-          <Button variant="mybutton" onClick={handleSubmitPost}>
-            Complete the Quiz
-          </Button>
+          <Link href={"/score"}>
+            <Button variant="mybutton" onClick={handleSubmitPost}>
+              Complete the Quiz
+            </Button>
+          </Link>
         </div>
       </div>
     </div>

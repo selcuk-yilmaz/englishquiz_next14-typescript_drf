@@ -28,7 +28,7 @@ export function RadioGroupForm() {
   });
 
   function onSubmit(data: z.infer<typeof FormSchema>) {
-    console.log("form dataya kaydedilen",data)
+    // console.log("form dataya kaydedilen",data)
     toast({
       title: "You submitted the following values:",
       description: (

@@ -20,7 +20,7 @@ export const navLinks = [
   },
   {
     label: "Score Board ",
-    route: "/store",
+    route: "/score",
     icon: Medal,
   },
 

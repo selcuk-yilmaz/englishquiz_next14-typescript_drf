@@ -25,16 +25,7 @@ export interface Option {
   is_right: boolean;
 }
 
-export interface ResultOfQuiz {
-  id: number;
-  name: string;
-  correct: string;
-  wrong: string;
-  empty: string;
-  score: string;
-  status: "poor" | "medium" | "normal" | "good" | "perfect";
-}
-
+//! below is using as current
 export interface Questions {
   id: number;
   subject: string;
@@ -80,4 +71,18 @@ export interface QuizResponse {
   next: string | null;
   previous: string | null;
   results: QuizSelectedSubj[];
+}
+export interface WrongQuestion {
+  id: number;
+  subject_name: string;
+}
+export interface ResultOfQuiz {
+  id: number;
+  correct: number;
+  empty: number;
+  score: number;
+  status: string;
+  user: "";
+  wrong: number;
+  wrong_questions: WrongQuestion[];
 }
