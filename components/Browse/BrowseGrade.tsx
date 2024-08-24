@@ -1,13 +1,10 @@
 
 import {
   fetchQuizByGrade,
-  fetchQuizBySubject,
-  fetchQuizzes,
 } from "@/actions/quizActions";
 import BrowseItem from "@/components/Browse/BrowseItem";
 // import Category from "@/components/Category/Category";
-import { Questions, SelectedGrade, SelectedSubject } from "@/types/quizTypes";
-import { type } from "os";
+import {SelectedGrade, SelectedSubject } from "@/types/quizTypes";
 import React from "react";
 // import { usePathname } from "next/navigation";
 interface BrowseProps {
@@ -15,7 +12,6 @@ interface BrowseProps {
 }
 const BrowseGrade: React.FC<BrowseProps> = async ({ slug }) => {
   const quizzesByGrade: SelectedGrade[] = await fetchQuizByGrade(slug);
-  //   const quizzesBySubject: SelectedSubject = await fetchQuizBySubject("flags");
 
   return (
     <div className="">

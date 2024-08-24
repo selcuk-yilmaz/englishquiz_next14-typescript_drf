@@ -1,36 +1,39 @@
 "use client";
 import React, { createContext, useContext, useState, useEffect } from "react";
-import { Quiz, Questions, ResultOfQuiz } from "../types/quizTypes";
-import { fetchQuizzes, postStudentResponses } from "../actions/quizActions";
+import { Questions, QuizResponse, ResultOfQuiz } from "../types/quizTypes";
+import { fetchAllQuestions, fetchQuizzes, postStudentResponses } from "../actions/quizActions";
 
-interface StudentResponse {
+interface StudentResType {
   id: number;
   selectedOption: string;
 }
 
 interface QuizContextType {
-  quizzes: Questions[];
+  // quizzes: Questions[];
+  // setQuizzes: React.Dispatch<React.SetStateAction<Questions[]>>;
   loading: boolean;
   error: string | null;
-  studentResponses: StudentResponse[];
-  setStudentResponses: React.Dispatch<React.SetStateAction<StudentResponse[]>>;
+  studentResponses: StudentResType[];
+  setStudentResponses: React.Dispatch<React.SetStateAction<StudentResType[]>>;
   handleSubmitPost: () => Promise<void>;
-  quizScore: ResultOfQuiz; // Change this to a single object
+  quizScore: ResultOfQuiz; // this is a single object
   setQuizScore: React.Dispatch<React.SetStateAction<ResultOfQuiz>>;
+  quizDataGlobal: QuizResponse["results"];
+  setQuizDataGlobal: React.Dispatch<
+    React.SetStateAction<QuizResponse["results"]>
+  >;
 }
-
 
 const QuizContext = createContext<QuizContextType | undefined>(undefined);
 
 export const QuizProvider: React.FC<{ children: React.ReactNode }> = ({
   children,
 }) => {
-  const [quizzes, setQuizzes] = useState<Questions[]>([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
-    const [studentResponses, setStudentResponses] = useState<StudentResponse[]>(
-      []
-    );
+  const [studentResponses, setStudentResponses] = useState<StudentResType[]>(
+    []
+  );
   const [quizScore, setQuizScore] = useState<ResultOfQuiz>({
     id: 0,
     user: "",
@@ -41,28 +44,9 @@ export const QuizProvider: React.FC<{ children: React.ReactNode }> = ({
     status: "",
     wrong_questions: [],
   });
+  const [quizDataGlobal, setQuizDataGlobal] = useState<QuizResponse["results"]>([]);
 
-  useEffect(() => {
-    const loadQuizzes = async () => {
-      try {
-        const data = await fetchQuizzes();
-        setQuizzes(data);
-      } catch (err) {
-        setError("Failed to load quizzes");
-      } finally {
-        setLoading(false);
-      }
-    };
-
-    loadQuizzes();
-  }, []);
-  //! below is post student responses for be
-  // Define state to store student responses
-
-  useEffect(() => {
-    console.log(studentResponses);
-  }, [studentResponses]);
-
+  //! below is post student responses for be for quizScore
   const handleSubmitPost = async () => {
     try {
       const response = await postStudentResponses(studentResponses);
@@ -73,10 +57,11 @@ export const QuizProvider: React.FC<{ children: React.ReactNode }> = ({
     }
   };
 
+  console.log("studentResponses", studentResponses);
+  console.log("quizDataGlobal", quizDataGlobal);
   return (
     <QuizContext.Provider
       value={{
-        quizzes,
         loading,
         error,
         studentResponses,
@@ -84,6 +69,8 @@ export const QuizProvider: React.FC<{ children: React.ReactNode }> = ({
         handleSubmitPost,
         quizScore,
         setQuizScore,
+        quizDataGlobal,
+        setQuizDataGlobal,
       }}
     >
       {children}

@@ -64,8 +64,6 @@ const QuizesPageItem = ({
         <CardContent>
           <span>Difficulty degree </span>
           <Badge>{difficulty}</Badge>
-
-          {/* Çoktan seçmeli quiz formu */}
           <RadioGroupForm onSubmitAnswer={handleAnswerSubmit} />
         </CardContent>
       </Card>

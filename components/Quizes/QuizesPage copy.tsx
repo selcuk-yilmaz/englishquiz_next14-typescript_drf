@@ -1,7 +1,5 @@
 import {
-  fetchQuizByGrade,
   fetchQuizBySubject,
-  fetchQuizzes,
 } from "@/actions/quizActions";
 import {
   QuizResponse,

@@ -48,17 +48,17 @@ export const fetchQuizBySubject = async (
 };
 
 //! post student responses to be for calculate
-interface StudentResponse {
+interface StudentResType {
   id: number;
   selectedOption: string;
 }
 
 interface PostResponsesPayload {
-  studentResponses: StudentResponse[];
+  studentResponses: StudentResType[];
 }
 
 export const postStudentResponses = async (
-  studentResponses: StudentResponse[]
+  studentResponses: StudentResType[]
 ): Promise<any> => {
   const payload: PostResponsesPayload = { studentResponses };
 
@@ -72,8 +72,23 @@ export const postStudentResponses = async (
 };
 
 
+//! get grades info for category component
+export const fetchAllQuestions = async (): Promise<Questions[]> => {
+  const response = await axios.get("/api/questions/");
+  // console.log(response.data);
+  return response.data;
+};
 
-//!belows are example
+
+
+
+
+
+
+
+
+
+//! belows are example
 export const fetchQuizzes = async (): Promise<Questions[]> => {
   const response = await axios.get("/api/questions/");
   // console.log(response);

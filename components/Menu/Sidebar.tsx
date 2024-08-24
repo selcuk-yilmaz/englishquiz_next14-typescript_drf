@@ -12,6 +12,8 @@ import { Button } from "../ui/button";
 import { Input } from "../ui/input";
 import NavLinks from "./NavLinks";
 import SocialMedia from "./SocialMedia";
+import { Badge } from "../ui/badge";
+import { Card, CardHeader } from "../ui/card";
 
 const Sidebar = () => {
   const pathname = usePathname();
@@ -31,7 +33,11 @@ const Sidebar = () => {
               height={160}
             />
           </Link>
-
+          <Card>
+            <CardHeader>
+              <Badge>meltem teacher</Badge>
+            </CardHeader>
+          </Card>
           <div className="mt-6 text-center">
             <ModeToggle />
           </div>
