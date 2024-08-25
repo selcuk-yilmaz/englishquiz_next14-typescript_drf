@@ -31,7 +31,7 @@ export async function generateMetadata({ params }: { params: BrowseProps }) {
 }
 
 const QuizesPage: React.FC<BrowseProps> = ({ slug }) => {
-  const { handleSubmitPost, setQuizDataGlobal } = useQuizContext();
+  const { handleSubmitPost, setSolvedTenQue } = useQuizContext();
   const [quizData, setQuizData] = useState<QuizResponse["results"]>([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
@@ -42,7 +42,7 @@ const QuizesPage: React.FC<BrowseProps> = ({ slug }) => {
         const data: QuizResponse = await fetchQuizBySubject(slug);
         // console.log(data.results);
         setQuizData(data.results);
-        setQuizDataGlobal(data.results);
+        setSolvedTenQue(data.results);
       } catch (err) {
         setError("Failed to load quizzes");
       } finally {

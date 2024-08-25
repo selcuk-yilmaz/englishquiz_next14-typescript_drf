@@ -11,63 +11,36 @@ import { Button } from "@/components/ui/button";
 import PanelGroup from "@/components/score/PanelGroup";
 
 const ScoreTable = () => {
-  const { quizScore, quizDataGlobal } = useQuizContext();
-  const questionOfWrongAndEmpty = quizDataGlobal.filter((item) =>
-    quizScore.wrong_questions.some((que) => que.id === item.id)
+  const { quizScore, solvedTenQue } = useQuizContext();
+
+  const questionOfEmpty = solvedTenQue.filter(
+    (item) =>
+      !quizScore.correct_questions.some((que) => que.id === item.id) &&
+      !quizScore.wrong_questions.some((que) => que.id === item.id)
   );
 
-  console.log("questionOfWrongAndEmpty", questionOfWrongAndEmpty);
+  console.log("quizScore", quizScore);
+  console.log("questionOfEmpty", questionOfEmpty);
   return (
     <>
       <div className="col-span-1 border-2 border-red-500">
-        <div className="flex justify-center items-center border-2 border-green-500" >
+        <div className="flex justify-center items-center border-2 border-green-500">
           <Card>
             <CardHeader>
               <CardContent>
                 <PanelGroup quizScore={quizScore} />
               </CardContent>
-              {/* <p className="mt-2 text-base font-semibold">
-              user: {quizScore.user}
-            </p>
-            <p className="mt-2 text-base font-semibold">
-              correct: {quizScore.correct}
-            </p>
-            <p className="mt-2 text-base font-semibold">
-              wrong: {quizScore.wrong}
-            </p>
-            <p className="mt-2 text-base font-semibold">
-              empty: {quizScore.empty}
-            </p>
-            <p className="mt-2 text-base font-semibold">
-              score: {quizScore.score}
-            </p> */}
             </CardHeader>
           </Card>
         </div>
         <div className="mt-4">
           <Card>
             <CardHeader className=" flex justify-center  items-center">
-              <p>wrongly answered questions Answers</p>
-            </CardHeader>
-            <div className="flex">
-              {questionOfWrongAndEmpty?.map((item) => (
-                <CardContent key={item.id}>
-                  <span>{item.id} </span>
-                  <span>{item.correct} </span>
-                  {/* <Badge>{item.subject_title}</Badge> */}
-                </CardContent>
-              ))}
-            </div>
-          </Card>
-        </div>
-        <div className="mt-4">
-          <Card>
-            <CardHeader className=" flex justify-center  items-center">
-              <p>wrongly answered questions</p>
+              <p>Mistakes Questions</p>
             </CardHeader>
           </Card>
           <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 2xl:grid-cols-4 gap-2 mt-2">
-            {questionOfWrongAndEmpty.map((question) => (
+            {quizScore.wrong_questions?.map((question) => (
               <div className="border-2" key={question.id}>
                 <QuizesPageItem
                   id={question.id}
@@ -82,12 +55,33 @@ const ScoreTable = () => {
                       <Badge>{question.correct}</Badge>
                     </span>
                   </CardHeader>
-                  {/* <CardContent className="mx-auto flex justify-end items-center">
-                  <span className="border-2 border-orange-500">
-                    correct answer
-                  </span>
-                  <Badge>{question.correct}</Badge>
-                </CardContent> */}
+                </Card>
+              </div>
+            ))}
+          </div>
+        </div>
+        <div className="mt-4">
+          <Card>
+            <CardHeader className=" flex justify-center  items-center">
+              <p>Skipped Questions</p>
+            </CardHeader>
+          </Card>
+          <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 2xl:grid-cols-4 gap-2 mt-2">
+            {questionOfEmpty?.map((question) => (
+              <div className="border-2" key={question.id}>
+                <QuizesPageItem
+                  id={question.id}
+                  subject_title={question.subject_title}
+                  difficulty={question.difficulty}
+                  url={question.url}
+                />
+                <Card>
+                  <CardHeader>
+                    <span className="flex justify-end">
+                      correct answer=
+                      <Badge>{question.correct}</Badge>
+                    </span>
+                  </CardHeader>
                 </Card>
               </div>
             ))}

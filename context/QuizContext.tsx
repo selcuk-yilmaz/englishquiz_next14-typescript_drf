@@ -18,8 +18,8 @@ interface QuizContextType {
   handleSubmitPost: () => Promise<void>;
   quizScore: ResultOfQuiz; // this is a single object
   setQuizScore: React.Dispatch<React.SetStateAction<ResultOfQuiz>>;
-  quizDataGlobal: QuizResponse["results"];
-  setQuizDataGlobal: React.Dispatch<
+  solvedTenQue: QuizResponse["results"];
+  setSolvedTenQue: React.Dispatch<
     React.SetStateAction<QuizResponse["results"]>
   >;
 }
@@ -43,10 +43,11 @@ export const QuizProvider: React.FC<{ children: React.ReactNode }> = ({
     score: 0,
     status: "",
     wrong_questions: [],
+    correct_questions: [],
   });
-  const [quizDataGlobal, setQuizDataGlobal] = useState<QuizResponse["results"]>([]);
+  const [solvedTenQue, setSolvedTenQue] = useState<QuizResponse["results"]>([]);
 
-  //! below is post student responses for be for quizScore
+  //! below is post student responses for be for quizScore aşğaıyı context e koymamızın nedeni return eden datayı score page kullanacağımızdandır.
   const handleSubmitPost = async () => {
     try {
       const response = await postStudentResponses(studentResponses);
@@ -58,7 +59,7 @@ export const QuizProvider: React.FC<{ children: React.ReactNode }> = ({
   };
 
   console.log("studentResponses", studentResponses);
-  console.log("quizDataGlobal", quizDataGlobal);
+  console.log("solvedTenQue", solvedTenQue);
   return (
     <QuizContext.Provider
       value={{
@@ -69,8 +70,8 @@ export const QuizProvider: React.FC<{ children: React.ReactNode }> = ({
         handleSubmitPost,
         quizScore,
         setQuizScore,
-        quizDataGlobal,
-        setQuizDataGlobal,
+        solvedTenQue,
+        setSolvedTenQue,
       }}
     >
       {children}

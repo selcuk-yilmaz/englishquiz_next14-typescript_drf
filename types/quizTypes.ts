@@ -74,7 +74,17 @@ export interface QuizResponse {
 }
 export interface WrongQuestion {
   id: number;
-  subject_name: string;
+  subject_title: string;
+  url: string;
+  correct: string;
+  difficulty:string;
+}
+export interface CorrectQuestion {
+  id: number;
+  subject_title: string;
+  url: string;
+  correct: string;
+  difficulty:string;
 }
 export interface ResultOfQuiz {
   id: number;
@@ -85,4 +95,5 @@ export interface ResultOfQuiz {
   user: "";
   wrong: number;
   wrong_questions: WrongQuestion[];
+  correct_questions: CorrectQuestion[];
 }

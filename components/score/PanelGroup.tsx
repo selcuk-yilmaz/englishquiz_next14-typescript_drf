@@ -45,6 +45,9 @@ export function PanelGroup({ quizScore }: PanelGroupProps) {
             <p className="mt-2 text-base font-semibold">
               empty: {quizScore.empty}
             </p>
+            <p className="mt-2 text-base font-semibold">
+              score: {quizScore.score} puan
+            </p>
           </CardHeader>
         </Card>
         {/* </div> */}
@@ -61,8 +64,8 @@ export function PanelGroup({ quizScore }: PanelGroupProps) {
               </CardHeader> */}
                 <CardContent>
                   <div className="flex justify-center items-center border-2 border-orange-500">
-                    <span className="font-semibold">score=</span>
-                    <Badge>{quizScore.score}</Badge>
+                    <span className="font-semibold">status=</span>
+                    <Badge>{quizScore.status}</Badge>
                   </div>
                 </CardContent>
               </CardHeader>
