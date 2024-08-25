@@ -33,13 +33,13 @@ const MobileMenu = () => {
     >
       <Link href="/" className="flex items-center justify-center gap-3">
         <Image
-          alt="Efe Görkem Logo"
+          alt="meltem teacher"
           className="rounded-full"
           src="/pp.png"
           width={40}
           height={40}
         />
-        Efe Görkem Ümit
+        Meltem YILMAZ-English teacher
       </Link>
 
       <div className="flex gap-4">
