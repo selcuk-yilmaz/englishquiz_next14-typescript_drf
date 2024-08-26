@@ -12,6 +12,7 @@ interface QuizesItemProps {
   subject_title: string;
   difficulty: string;
   url: string;
+  number_of_options:number;
 }
 
 const QuizesPageItem = ({
@@ -19,6 +20,7 @@ const QuizesPageItem = ({
   subject_title,
   difficulty,
   url,
+  number_of_options,
 }: QuizesItemProps) => {
   const { studentResponses, setStudentResponses } = useQuizContext();
 
@@ -64,7 +66,10 @@ const QuizesPageItem = ({
         <CardContent>
           <span>Difficulty degree </span>
           <Badge>{difficulty}</Badge>
-          <RadioGroupForm onSubmitAnswer={handleAnswerSubmit} />
+          <RadioGroupForm
+            onSubmitAnswer={handleAnswerSubmit}
+            number_of_options={number_of_options}
+          />
         </CardContent>
       </Card>
     </div>

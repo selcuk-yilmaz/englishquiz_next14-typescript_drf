@@ -63,7 +63,7 @@ export interface QuizSelectedSubj {
   url: string;
   difficulty: string;
   correct: string;
-  number_of_options: string;
+  number_of_options: number;
 }
 
 export interface QuizResponse {

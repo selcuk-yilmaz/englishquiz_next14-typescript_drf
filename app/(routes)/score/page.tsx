@@ -1,7 +1,7 @@
 "use client";
 
 import React from "react";
-import { Card, CardContent, CardHeader } from "@/components/ui/card";
+import { Card, CardContent,CardTitle, CardHeader } from "@/components/ui/card";
 import Image from "next/image";
 import { Badge } from "@/components/ui/badge";
 import { useQuizContext } from "@/context/QuizContext";
@@ -9,6 +9,7 @@ import QuizesPageItem from "@/components/Quizes/QuizesPageItem";
 import Link from "next/link";
 import { Button } from "@/components/ui/button";
 import PanelGroup from "@/components/score/PanelGroup";
+import WrongAndEmpty from "@/components/score/WrongAndEmpty";
 
 const ScoreTable = () => {
   const { quizScore, solvedTenQue } = useQuizContext();
@@ -23,34 +24,35 @@ const ScoreTable = () => {
   console.log("questionOfEmpty", questionOfEmpty);
   return (
     <>
-      <div className="col-span-1 border-2 border-red-500">
-        <div className="flex justify-center items-center border-2 border-green-500">
+      <div className="col-span-1">
+        <div className="flex justify-center items-center">
           <Card>
-            <CardHeader>
-              <CardContent>
-                <PanelGroup quizScore={quizScore} />
-              </CardContent>
+            <CardHeader className=" flex justify-center  items-center">
+              <CardTitle>Result of Quiz</CardTitle>
             </CardHeader>
+            <CardContent>
+              <PanelGroup quizScore={quizScore} />
+            </CardContent>
           </Card>
         </div>
         <div className="mt-4">
           <Card>
             <CardHeader className=" flex justify-center  items-center">
-              <p>Mistakes Questions</p>
+              <CardTitle>Wrong Questions</CardTitle>
             </CardHeader>
           </Card>
           <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 2xl:grid-cols-4 gap-2 mt-2">
             {quizScore.wrong_questions?.map((question) => (
-              <div className="border-2" key={question.id}>
-                <QuizesPageItem
+              <div className="border-1" key={question.id}>
+                <WrongAndEmpty
                   id={question.id}
                   subject_title={question.subject_title}
                   difficulty={question.difficulty}
                   url={question.url}
                 />
                 <Card>
-                  <CardHeader>
-                    <span className="flex justify-end">
+                  <CardHeader className="p-1">
+                    <span className="flex justify-start">
                       correct answer=
                       <Badge>{question.correct}</Badge>
                     </span>
@@ -63,21 +65,21 @@ const ScoreTable = () => {
         <div className="mt-4">
           <Card>
             <CardHeader className=" flex justify-center  items-center">
-              <p>Skipped Questions</p>
+              <CardTitle>Empty Questions</CardTitle>
             </CardHeader>
           </Card>
           <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 2xl:grid-cols-4 gap-2 mt-2">
             {questionOfEmpty?.map((question) => (
-              <div className="border-2" key={question.id}>
-                <QuizesPageItem
+              <div className="border-1" key={question.id}>
+                <WrongAndEmpty
                   id={question.id}
                   subject_title={question.subject_title}
                   difficulty={question.difficulty}
                   url={question.url}
                 />
                 <Card>
-                  <CardHeader>
-                    <span className="flex justify-end">
+                  <CardHeader className="p-1">
+                    <span className="flex justify-start">
                       correct answer=
                       <Badge>{question.correct}</Badge>
                     </span>

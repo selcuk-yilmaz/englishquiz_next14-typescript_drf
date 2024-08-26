@@ -51,8 +51,8 @@ const QuizesPage: React.FC<BrowseProps> = ({ slug }) => {
     };
 
     loadQuizData();
-  }, [slug]);
-
+  }, [slug, setSolvedTenQue]);
+  console.log(quizData);
   if (loading) {
     return <div>Loading...</div>;
   }
@@ -75,6 +75,7 @@ const QuizesPage: React.FC<BrowseProps> = ({ slug }) => {
               subject_title={question.subject_title}
               difficulty={question.difficulty}
               url={question.url}
+              number_of_options={question.number_of_options}
             />
           </div>
         ))}

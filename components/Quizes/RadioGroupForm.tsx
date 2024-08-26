@@ -1,5 +1,4 @@
 "use client";
-
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
 import { z } from "zod";
@@ -15,24 +14,26 @@ import {
 import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group";
 import { toast } from "@/components/ui/use-toast";
 import { Label } from "@/components/ui/label";
-import { useState } from "react";
+import React from "react";
 
 const FormSchema = z.object({
-  selectedOption: z.enum(["A", "B", "C", "D"], {
+  selectedOption: z.enum(["A", "B", "C", "D", "E"], {
     required_error: "Please select an option",
   }),
 });
 
 interface RadioGroupFormProps {
   onSubmitAnswer: (data: { selectedOption: string }) => void;
+  number_of_options: number;
 }
 
-export function RadioGroupForm({ onSubmitAnswer }: RadioGroupFormProps) {
+export function RadioGroupForm({
+  onSubmitAnswer,
+  number_of_options,
+}: RadioGroupFormProps) {
   const form = useForm<z.infer<typeof FormSchema>>({
     resolver: zodResolver(FormSchema),
   });
-  
-  // const [selectedOption, setSelectedOption] = useState<string | null>(null);
 
   function onSubmit(data: z.infer<typeof FormSchema>) {
     onSubmitAnswer(data);
@@ -46,7 +47,8 @@ export function RadioGroupForm({ onSubmitAnswer }: RadioGroupFormProps) {
     });
   }
 
-// console.log("selectedOption", selectedOption);
+  const options = ["A", "B", "C", "D", "E"].slice(0, number_of_options);
+
   return (
     <Form {...form}>
       <form onSubmit={form.handleSubmit(onSubmit)} className="w-2/3 space-y-6">
@@ -58,40 +60,22 @@ export function RadioGroupForm({ onSubmitAnswer }: RadioGroupFormProps) {
               <FormLabel>Select the correct answer</FormLabel>
               <FormControl>
                 <RadioGroup
-                  onValueChange={(value) => {
-                    field.onChange(value); // react-hook-form'dan gelen field onChange fonksiyonu
-                    // setSelectedOption(value); // Seçilen opsiyonu güncelle
-                  }}
+                  onValueChange={(value) => field.onChange(value)}
                   className="flex items-center space-x-12"
                 >
-                  <div className="flex items-center space-x-2">
-                    <RadioGroupItem value="A" id="A" />
-                    <Label htmlFor="A">A</Label>
-                  </div>
-                  <div className="flex items-center space-x-2">
-                    <RadioGroupItem value="B" id="B" />
-                    <Label htmlFor="B">B</Label>
-                  </div>
-                  <div className="flex items-center space-x-2">
-                    <RadioGroupItem value="C" id="C" />
-                    <Label htmlFor="C">C</Label>
-                  </div>
-                  <div className="flex items-center space-x-2">
-                    <RadioGroupItem value="D" id="D" />
-                    <Label htmlFor="D">D</Label>
-                  </div>
+                  {options.map((option) => (
+                    <div key={option} className="flex items-center space-x-2">
+                      <RadioGroupItem value={option} id={option} />
+                      <Label htmlFor={option}>{option}</Label>
+                    </div>
+                  ))}
                 </RadioGroup>
               </FormControl>
               <FormMessage />
             </FormItem>
           )}
         />
-        <Button type="submit">
-          Submit
-        </Button>
-        {/* <Button className={selectedOption ? "bg-green-500" : ""} type="submit">
-          Submit
-        </Button> */}
+        <Button type="submit">Submit</Button>
       </form>
     </Form>
   );

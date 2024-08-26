@@ -27,7 +27,7 @@ export function PanelGroup({ quizScore }: PanelGroupProps) {
   return (
     <ResizablePanelGroup
       direction="horizontal"
-      className="max-w-md rounded-lg border md:min-w-[650px]"
+      className="max-w-md rounded-lg  md:min-w-[650px]"
     >
       <ResizablePanel defaultSize={50}>
         {/* <div className="flex h-[200px] items-center justify-center border-2 border-orange-500"> */}
@@ -63,7 +63,7 @@ export function PanelGroup({ quizScore }: PanelGroupProps) {
                 <span className="font-semibold">score=</span>
               </CardHeader> */}
                 <CardContent>
-                  <div className="flex justify-center items-center border-2 border-orange-500">
+                  <div className="flex justify-center items-center">
                     <span className="font-semibold">status=</span>
                     <Badge>{quizScore.status}</Badge>
                   </div>
