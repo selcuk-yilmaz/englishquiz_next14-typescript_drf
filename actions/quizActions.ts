@@ -7,11 +7,18 @@ import {
   SelectedGrade,
   Grade,
   QuizResponse,
+  AllSubjects,
 } from "../types/quizTypes";
 
 //! get grades info for category component
 export const fetchGrades = async (): Promise<Grade[]> => {
   const response = await axios.get("/api/grade/");
+  // console.log(response);
+  return response.data;
+};
+//! get all_subjects from api/subjects
+export const fetchAllSubjects = async (): Promise<AllSubjects[]> => {
+  const response = await axios.get("/api/subject/");
   // console.log(response);
   return response.data;
 };

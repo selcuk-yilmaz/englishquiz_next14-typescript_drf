@@ -44,8 +44,8 @@ const config = {
         "accordion-up": "accordion-up 0.2s ease-out",
       },
       backgroundImage: {
-        "dark-image": "url('/happiness_whiteBG.jpeg')",
-        "white-image": "url('/smile_whiteBG.jpeg')",
+        "dark-image": "url('/images/backGrounds/blackBG.jpeg')",
+        "white-image": "url('/images/backGrounds/whiteBG.jpeg')",
       },
     },
   },

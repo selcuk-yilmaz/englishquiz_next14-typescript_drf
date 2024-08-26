@@ -20,8 +20,8 @@ const ScoreTable = () => {
       !quizScore.wrong_questions.some((que) => que.id === item.id)
   );
 
-  console.log("quizScore", quizScore);
-  console.log("questionOfEmpty", questionOfEmpty);
+  // console.log("quizScore", quizScore);
+  // console.log("questionOfEmpty", questionOfEmpty);
   return (
     <>
       <div className="col-span-1">

@@ -16,7 +16,9 @@ const RoutesLayout = ({ children }: RootLayoutProps) => {
         <MobileMenu />
         <div className="flex-1 lg:ml-72 ml-0 lg:max-h-screen">
           <Header />
-          <div className="mx-auto px-5 w-full">{children}</div>
+          <div className="mx-auto px-5 w-full bg-white-image dark:bg-dark-image bg-cover bg-center bg-no-repeat">
+            {children}
+          </div>
         </div>
       </QuizProvider>
     </main>

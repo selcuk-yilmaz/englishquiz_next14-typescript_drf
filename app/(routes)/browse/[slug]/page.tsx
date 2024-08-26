@@ -10,8 +10,7 @@ const BrowseDetailPage = ({ params }: { params: { slug: number } }) => {
   return (
     <div className="mt-4">
       <Category />
-
-      <div className="grid grid-cols-1 gap-2 mt-2">
+      <div className="min-h-screen grid grid-cols-1 gap-2 mt-2">
         <BrowseGrade slug={slug} />
       </div>
     </div>

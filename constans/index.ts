@@ -1,4 +1,4 @@
-import { CarFront, CodeIcon, House, Contact, Medal } from "lucide-react";
+import { CarFront,ListPlus,Signature, CodeIcon, House, Contact, Medal } from "lucide-react";
 import {
   FiInstagram,
   FiGithub,
@@ -16,7 +16,7 @@ export const navLinks = [
   {
     label: "About",
     route: "/about",
-    icon: CodeIcon,
+    icon: Signature,
   },
   {
     label: "Score Board ",
@@ -28,6 +28,11 @@ export const navLinks = [
     label: "Contact",
     route: "/contact",
     icon: Contact,
+  },
+  {
+    label: "Add Question",
+    route: "/add",
+    icon: ListPlus,
   },
 ];
 

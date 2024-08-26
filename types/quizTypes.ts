@@ -97,3 +97,10 @@ export interface ResultOfQuiz {
   wrong_questions: WrongQuestion[];
   correct_questions: CorrectQuestion[];
 }
+export interface AllSubjects {
+  id: number;
+  lesson_name: string;
+  grade_level: number;
+  title: string;
+  question_count: number;
+}
