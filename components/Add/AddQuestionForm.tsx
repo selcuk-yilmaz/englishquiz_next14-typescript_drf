@@ -5,8 +5,6 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
 import { z } from "zod";
 import { useEffect, useState } from "react";
-import axios from "axios";
-
 import { Button } from "@/components/ui/button";
 import {
   Form,
@@ -26,14 +24,14 @@ import {
 } from "@/components/ui/select";
 import { toast } from "@/components/ui/use-toast";
 import { Input } from "@/components/ui/input";
-import { fetchAllSubjects } from "@/actions/quizActions";
+import { fetchAllSubjects, postCreateQuestion } from "@/actions/quizActions";
 import { AllSubjects } from "@/types/quizTypes";
 
 const formSchema = z.object({
   subject: z.string({
     required_error: "Please select a subject to display.",
   }),
-  screenShot: z.string().min(2, {
+  image: z.string().min(2, {
     message: "Please select your file.",
   }),
   number_of_options: z.preprocess(
@@ -74,23 +72,55 @@ export function AddQuestionForm() {
     resolver: zodResolver(formSchema),
     defaultValues: {
       subject: "",
-      screenShot: "",
-      number_of_options: 1,
+      image: "",
+      number_of_options: 4,
       correct: "",
       difficulty: "",
     },
   });
 
-  function onSubmit(data: z.infer<typeof formSchema>) {
-    // console.log("data", data);
-    toast({
-      title: "You submitted the following values:",
-      description: (
-        <pre className="mt-2 w-[340px] rounded-md bg-slate-950 p-4">
-          <code className="text-white">{JSON.stringify(data, null, 2)}</code>
-        </pre>
-      ),
-    });
+  async function onSubmit(data: z.infer<typeof formSchema>) {
+    console.log("Form submission data", data);
+
+    try {
+      const formData = new FormData();
+      formData.append("subject", data.subject);
+      formData.append("difficulty", data.difficulty);
+      formData.append("correct", data.correct);
+      formData.append("number_of_options", data.number_of_options.toString());
+
+      // Append file
+      const fileInput = (
+        document.querySelector('input[name="image"]') as HTMLInputElement
+      )?.files?.[0];
+      if (fileInput) {
+        formData.append("image", fileInput);
+      }
+
+      // Call the postCreateQuestion function with the populated FormData
+      const createdQuestion = await postCreateQuestion(formData);
+
+      toast({
+        title: "Question created successfully!",
+        description: (
+          <pre className="mt-2 w-[340px] rounded-md bg-slate-950 p-4">
+            <code className="text-white">
+              {JSON.stringify(createdQuestion, null, 2)}
+            </code>
+          </pre>
+        ),
+      });
+    } catch (error) {
+      console.error("Error creating question:", error);
+      toast({
+        title: "Failed to create question",
+        description: (
+          <pre className="mt-2 w-[340px] rounded-md bg-red-500 p-4">
+            <code className="text-white">{JSON.stringify(error, null, 2)}</code>
+          </pre>
+        ),
+      });
+    }
   }
 
   return (
@@ -102,7 +132,10 @@ export function AddQuestionForm() {
           render={({ field }) => (
             <FormItem>
               <FormLabel>Subject</FormLabel>
-              <Select onValueChange={field.onChange} defaultValue={field.value}>
+              <Select
+                onValueChange={(val) => field.onChange(val)}
+                defaultValue={String(field.value)}
+              >
                 <FormControl>
                   <SelectTrigger>
                     <SelectValue placeholder="Select a subject" />
@@ -110,12 +143,13 @@ export function AddQuestionForm() {
                 </FormControl>
                 <SelectContent>
                   {subjects?.map((subject) => (
-                    <SelectItem key={subject.id} value={subject.title}>
+                    <SelectItem key={subject.id} value={subject.id.toString()}>
                       {subject.title}
                     </SelectItem>
                   ))}
                 </SelectContent>
               </Select>
+
               <FormDescription>
                 You can manage subjects in your{" "}
                 <Link href="/browse/2">Browse subjects</Link>.
@@ -127,12 +161,17 @@ export function AddQuestionForm() {
 
         <FormField
           control={form.control}
-          name="screenShot"
+          name="image"
           render={({ field }) => (
             <FormItem>
               <FormLabel>Screen Shot</FormLabel>
               <FormControl>
-                <Input placeholder="Screen Shot" {...field} type="file" />
+                <Input
+                  placeholder="Screen Shot"
+                  {...form.register("image")}
+                  {...field}
+                  type="file"
+                />
               </FormControl>
               <FormDescription>
                 This is your question image file.
@@ -144,24 +183,20 @@ export function AddQuestionForm() {
 
         <FormField
           control={form.control}
-          name="difficulty"
+          name="number_of_options"
           render={({ field }) => (
             <FormItem>
-              <FormLabel>Difficulty</FormLabel>
-              <Select onValueChange={field.onChange} defaultValue={field.value}>
-                <FormControl>
-                  <SelectTrigger>
-                    <SelectValue placeholder="Select difficulty level" />
-                  </SelectTrigger>
-                </FormControl>
-                <SelectContent>
-                  {difficultyOptions.map((option) => (
-                    <SelectItem key={option.value} value={option.value}>
-                      {option.label}
-                    </SelectItem>
-                  ))}
-                </SelectContent>
-              </Select>
+              <FormLabel>Number of Options</FormLabel>
+              <FormControl>
+                <Input
+                  placeholder="Number of options"
+                  {...field}
+                  type="number"
+                />
+              </FormControl>
+              <FormDescription>
+                This is the number of options for the question.
+              </FormDescription>
               <FormMessage />
             </FormItem>
           )}
@@ -194,20 +229,24 @@ export function AddQuestionForm() {
 
         <FormField
           control={form.control}
-          name="number_of_options"
+          name="difficulty"
           render={({ field }) => (
             <FormItem>
-              <FormLabel>Number of Options</FormLabel>
-              <FormControl>
-                <Input
-                  placeholder="Number of options"
-                  {...field}
-                  type="number"
-                />
-              </FormControl>
-              <FormDescription>
-                This is the number of options for the question.
-              </FormDescription>
+              <FormLabel>Difficulty</FormLabel>
+              <Select onValueChange={field.onChange} defaultValue={field.value}>
+                <FormControl>
+                  <SelectTrigger>
+                    <SelectValue placeholder="Select difficulty level" />
+                  </SelectTrigger>
+                </FormControl>
+                <SelectContent>
+                  {difficultyOptions.map((option) => (
+                    <SelectItem key={option.value} value={option.value}>
+                      {option.label}
+                    </SelectItem>
+                  ))}
+                </SelectContent>
+              </Select>
               <FormMessage />
             </FormItem>
           )}

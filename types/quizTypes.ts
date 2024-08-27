@@ -1,29 +1,29 @@
-export interface Category {
-  id: number;
-  name: string;
-  quiz_count: number;
-}
+// export interface Category {
+//   id: number;
+//   name: string;
+//   quiz_count: number;
+// }
 
-export interface Quiz {
-  id: number;
-  title: string;
-  category: Category;
-  question_count: number;
-}
+// export interface Quiz {
+//   id: number;
+//   title: string;
+//   category: Category;
+//   question_count: number;
+// }
 
-export interface Question {
-  id: number;
-  title: string;
-  quiz: Quiz;
-  difficulty: "B" | "I" | "A";
-}
+// export interface Question {
+//   id: number;
+//   title: string;
+//   quiz: Quiz;
+//   difficulty: "B" | "I" | "A";
+// }
 
-export interface Option {
-  id: number;
-  option_text: string;
-  question: Question;
-  is_right: boolean;
-}
+// export interface Option {
+//   id: number;
+//   option_text: string;
+//   question: Question;
+//   is_right: boolean;
+// }
 
 //! below is using as current
 export interface Questions {
@@ -56,6 +56,7 @@ export interface SelectedSubject {
   correct: string;
   number_of_options: string;
 }
+//! QuizResponse
 export interface QuizSelectedSubj {
   id: number;
   subject: number;
@@ -72,6 +73,7 @@ export interface QuizResponse {
   previous: string | null;
   results: QuizSelectedSubj[];
 }
+//! ResultOfQuiz
 export interface WrongQuestion {
   id: number;
   subject_title: string;
@@ -97,10 +99,19 @@ export interface ResultOfQuiz {
   wrong_questions: WrongQuestion[];
   correct_questions: CorrectQuestion[];
 }
+//! AllSubjects
 export interface AllSubjects {
   id: number;
   lesson_name: string;
   grade_level: number;
   title: string;
   question_count: number;
+}
+
+export interface CreateQuestion {
+  subject: string;
+  url: string;
+  difficulty: string;
+  correct: string;
+  number_of_options: number;
 }

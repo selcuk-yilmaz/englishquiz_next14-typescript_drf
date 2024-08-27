@@ -1,13 +1,14 @@
 import axios from "../utils/axiosInstance";
 import {
-  Quiz,
-  Question,
-  Category,
+  // Quiz,
+  // Question,
+  // Category,
   Questions,
   SelectedGrade,
   Grade,
   QuizResponse,
   AllSubjects,
+  CreateQuestion,
 } from "../types/quizTypes";
 
 //! get grades info for category component
@@ -79,19 +80,26 @@ export const postStudentResponses = async (
 };
 
 
-//! get grades info for category component
-export const fetchAllQuestions = async (): Promise<Questions[]> => {
-  const response = await axios.get("/api/questions/");
-  // console.log(response.data);
-  return response.data;
+//! post for create question
+export const postCreateQuestion = async (
+  formData: FormData // FormData object to send
+): Promise<any> => {
+  // Expecting the response from the server
+  try {
+    console.log("questions for post", formData);
+
+    const response = await axios.post("/api/questions/", formData, {
+      headers: {
+        "Content-Type": "multipart/form-data", // multipart/form-data for file upload
+      },
+    });
+
+    return response.data; // return the server's response
+  } catch (error) {
+    console.error("Failed to post question", error);
+    throw error;
+  }
 };
-
-
-
-
-
-
-
 
 
 
@@ -101,12 +109,19 @@ export const fetchQuizzes = async (): Promise<Questions[]> => {
   // console.log(response);
   return response.data;
 };
-
-export const updateQuiz = async (id: number, quiz: Quiz): Promise<Quiz> => {
-  const response = await axios.put(`/quizzes/${id}/`, quiz);
+export const fetchAllQuestions = async (): Promise<Questions[]> => {
+  const response = await axios.get("/api/questions/");
+  // console.log(response.data);
   return response.data;
 };
+
+// export const updateQuiz = async (id: number, quiz: Quiz): Promise<Quiz> => {
+//   const response = await axios.put(`/quizzes/${id}/`, quiz);
+//   return response.data;
+// };
 
 export const deleteQuiz = async (id: number): Promise<void> => {
   await axios.delete(`/quizzes/${id}/`);
 };
+
+
