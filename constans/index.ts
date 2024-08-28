@@ -31,7 +31,7 @@ export const navLinks = [
   },
   {
     label: "Add Question",
-    route: "/add",
+    route: "/admin",
     icon: ListPlus,
   },
 ];

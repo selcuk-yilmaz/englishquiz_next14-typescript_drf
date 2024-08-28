@@ -78,7 +78,6 @@ export function AddGrade() {
   return (
     <Form {...form}>
       <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-8">
-
         <FormField
           control={form.control}
           name="level"
@@ -93,7 +92,7 @@ export function AddGrade() {
                 />
               </FormControl>
               <FormDescription>
-                This is the number of grade.
+                Select the grade you want to add.
               </FormDescription>
               <FormMessage />
             </FormItem>

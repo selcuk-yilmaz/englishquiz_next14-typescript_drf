@@ -11,11 +11,14 @@ import {
   CreateQuestion,
 } from "../types/quizTypes";
 
-//! get grades info for category component
+//! get-delete grades
 export const fetchGrades = async (): Promise<Grade[]> => {
   const response = await axios.get("/api/grade/");
   // console.log(response);
   return response.data;
+};
+export const deleteGrade = async (id: number): Promise<void> => {
+  await axios.delete(`/api/grade/${id}/`);
 };
 //! get all_subjects from api/subjects
 export const fetchAllSubjects = async (): Promise<AllSubjects[]> => {
@@ -35,11 +38,11 @@ export const fetchQuizBySubject = async (
   slug: string
 ): Promise<QuizResponse> => {
   try {
-    console.log(
-      `/api/subject/${slug[0]}/?limit=${slug[1]}&offset=${
-        parseInt(slug[1], 10) - 10
-      }`
-    );
+    // console.log(
+    //   `/api/subject/${slug[0]}/?limit=${slug[1]}&offset=${
+    //     parseInt(slug[1], 10) - 10
+    //   }`
+    // );
     const response = await axios.get(
       `/api/subject/${slug[0]}/?limit=${slug[1]}&offset=${
         parseInt(slug[1], 10) - 10
@@ -106,9 +109,9 @@ export const postCreateQuestion = async (
 // };
 
 
-//! delete deleteQuestion
+//! delete for deleteQuestion not not ready
 export const deleteQuestion = async (id: number): Promise<void> => {
-  await axios.delete(`/quizzes/${id}/`);
+  await axios.delete(`/api/quizzes/${id}/`);
 };
 
 

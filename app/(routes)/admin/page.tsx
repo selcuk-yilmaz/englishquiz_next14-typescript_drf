@@ -1,4 +1,4 @@
-import AddQuestionForm from "@/components/Add/AddQuestionForm";
+import AddQuestionForm from "@/components/Admin/AddQuestionForm";
 import React from "react";
 import {
   Card,
@@ -13,9 +13,10 @@ import {
   ResizablePanel,
   ResizablePanelGroup,
 } from "@/components/ui/resizable";
-import AddGrade from "@/components/Add/AddGrade";
-import AddLesson from "@/components/Add/AddLesson";
-import AddSubject from "@/components/Add/AddSubject";
+import AddGrade from "@/components/Admin/AddGrade";
+import AddLesson from "@/components/Admin/AddLesson";
+import AddSubject from "@/components/Admin/AddSubject";
+import DellGrade from "@/components/Admin/DellGrade";
 
 
 
@@ -46,23 +47,10 @@ const AddQuestionPage = () => {
         </ResizablePanel>
         <ResizableHandle withHandle />
         <ResizablePanel defaultSize={40}>
-          <div className="flex flex-col items-center justify-center gap-3 border-2 border-red-500 p-6">
-            <div className="flex w-10/12 h-full items-center justify-center p-2 border-2 border-red-500">
-              <Card className="w-10/12 p-4">
-                <CardHeader>
-                  <CardTitle className="flex justify-center items-center text-base font-semibold">
-                    Add Lesson
-                  </CardTitle>
-                </CardHeader>
-                <CardContent className="p-0 grid gap-0">
-                  {/* <AddLesson /> */}
-                  <AddGrade />
-                </CardContent>
-                <CardFooter></CardFooter>
-              </Card>
-            </div>
-            <div className="flex w-10/12 h-full items-center justify-center p-2 border-2 border-red-500">
-              <Card className="w-10/12 p-4">
+          <div className="w-full h-full flex flex-col items-center justify-around gap-8 border-2 border-green-500">
+
+            <div className="flex w-full h-full items-center justify-around border-2  border-red-500">
+              <Card className="p-4">
                 <CardHeader>
                   <CardTitle className="flex justify-center items-center text-base font-semibold">
                     Add Grade
@@ -73,21 +61,19 @@ const AddQuestionPage = () => {
                 </CardContent>
                 <CardFooter></CardFooter>
               </Card>
-            </div>
-            <div className="flex w-10/12 h-full items-center justify-center p-2 border-2 border-red-500">
-              <Card className="w-10/12 p-4">
+              <Card className="p-4">
                 <CardHeader>
                   <CardTitle className="flex justify-center items-center text-base font-semibold">
-                    Add Subject
+                    Dell Grade
                   </CardTitle>
                 </CardHeader>
                 <CardContent className="p-0 grid gap-0">
-                  {/* <AddSubject /> */}
-                  <AddGrade />
+                  <DellGrade />
                 </CardContent>
                 <CardFooter></CardFooter>
               </Card>
             </div>
+
           </div>
         </ResizablePanel>
       </ResizablePanelGroup>
