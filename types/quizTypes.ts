@@ -26,6 +26,10 @@
 // }
 
 //! below is using as current
+export interface Lessons {
+  id: number;
+  name: string;
+}
 export interface Questions {
   id: number;
   subject: string;
