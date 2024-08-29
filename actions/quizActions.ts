@@ -132,15 +132,32 @@ export const postCreateQuestion = async (
   }
 };
 
-// export const updateQuestion = async (id: number, quiz: Quiz): Promise<Quiz> => {
-//   const response = await axios.put(`/quizzes/${id}/`, quiz);
-//   return response.data;
-// };
-
-
 export const deleteQuestion = async (id: number): Promise<void> => {
   await axios.delete(`/api/questions/${id}/`);
 };
+
+export const fetchQuestionById = async (id: number): Promise<Questions> => {
+  const response = await axios.get(`/api/questions/${id}/`);
+  return response.data;
+};
+
+export const patchQuestion = async (
+  id: number,
+  formData: FormData
+): Promise<Questions> => {
+  try {
+    const response = await axios.patch(`api/questions/${id}/`, formData, {
+      headers: {
+        "Content-Type": "multipart/form-data",
+      },
+    });
+    return response.data;
+  } catch (error) {
+    console.error("Failed to patch question", error);
+    throw error;
+  }
+};
+
 
 //! post results for student responses to be for calculate
 interface StudentResType {

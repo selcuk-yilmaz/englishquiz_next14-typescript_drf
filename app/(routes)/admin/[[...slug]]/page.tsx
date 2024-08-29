@@ -19,8 +19,10 @@ import AddSubject from "@/components/Admin/AddSubject";
 import DellGrade from "@/components/Admin/DellGrade";
 import DellLesson from "@/components/Admin/DellLesson";
 import DellSubject from "@/components/Admin/DellSubject";
+import UpdateQuestionForm from "@/components/Admin/UpdateQuestionForm";
 
-const AddQuestionPage = () => {
+const AddQuestionPage = ({ params }: { params: { slug: number } }) => {
+  const { slug } = params;
   return (
     <div className="flex justify-center items-center gap-2 mt-2">
       <ResizablePanelGroup
@@ -28,18 +30,33 @@ const AddQuestionPage = () => {
         className="min-h-[200px] max-w-md rounded-lg border-2 border-red-500 md:min-w-full"
       >
         <ResizablePanel defaultSize={40}>
-          <div className="flex h-full items-center justify-center p-4">
-            <Card className="w-10/12 p-8">
-              <CardHeader>
-                <CardTitle className="flex justify-center items-center text-base font-semibold">
-                  Add Question
-                </CardTitle>
-              </CardHeader>
-              <CardContent className="p-0 grid gap-0">
-                <AddQuestionForm />
-              </CardContent>
-              <CardFooter></CardFooter>
-            </Card>
+          <div className="w-full h-full flex flex-col items-center justify-around gap-8 border-2 border-green-500">
+            <div className="flex w-full items-center justify-around border-2 gap-4  border-red-500">
+              <Card className="w-10/12 p-8">
+                <CardHeader>
+                  <CardTitle className="flex justify-center items-center text-base font-semibold">
+                    Add Question
+                  </CardTitle>
+                </CardHeader>
+                <CardContent className="p-0 grid gap-0">
+                  <AddQuestionForm />
+                </CardContent>
+                <CardFooter></CardFooter>
+              </Card>
+            </div>
+            <div className="flex w-full items-center justify-around border-2 gap-4  border-red-500">
+              <Card className="w-10/12 p-8">
+                <CardHeader>
+                  <CardTitle className="flex justify-center items-center text-base font-semibold">
+                    Update Question
+                  </CardTitle>
+                </CardHeader>
+                <CardContent className="p-0 grid gap-0">
+                  <UpdateQuestionForm slug={slug} />
+                </CardContent>
+                <CardFooter></CardFooter>
+              </Card>
+            </div>
           </div>
         </ResizablePanel>
         <ResizableHandle withHandle />
