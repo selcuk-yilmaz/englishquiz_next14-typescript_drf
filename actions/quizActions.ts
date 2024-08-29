@@ -61,7 +61,7 @@ export const fetchGrades = async (): Promise<Grade[]> => {
   return response.data;
 };
 export const deleteGrade = async (id: number): Promise<void> => {
-  await axios.delete(`/api/grade/${id}/`);
+  await axios.delete(`/api/grade/detail/${id}/`);
 };
 export const fetchQuizByGrade = async (
   id: number
@@ -70,7 +70,7 @@ export const fetchQuizByGrade = async (
   return response.data;
 };
 
-//! get-post subjects 
+//! get-post-delete subjects 
 export const fetchAllSubjects = async (): Promise<AllSubjects[]> => {
   const response = await axios.get("/api/subject/");
   // console.log(response);
@@ -109,6 +109,9 @@ export const postCreateSubject = async (
     console.error("Failed to post subject", error);
     throw error;
   }
+};
+export const deleteSubject = async (id: number): Promise<void> => {
+  await axios.delete(`/api/subject/detail/${id}/`);
 };
 //! post-put-delete questions 
 export const postCreateQuestion = async (

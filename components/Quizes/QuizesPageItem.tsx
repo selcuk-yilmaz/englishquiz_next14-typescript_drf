@@ -6,13 +6,17 @@ import Image from "next/image";
 import { Badge } from "@/components/ui/badge";
 import RadioGroupForm from "./RadioGroupForm";
 import { useQuizContext } from "@/context/QuizContext";
+import { Button } from "../ui/button";
+import Link from "next/link";
+import { deleteQuestion } from "@/actions/quizActions";
+import { toast } from "@/components/ui/use-toast";
 
 interface QuizesItemProps {
   id: number;
   subject_title: string;
   difficulty: string;
   url: string;
-  number_of_options:number;
+  number_of_options: number;
 }
 
 const QuizesPageItem = ({
@@ -42,7 +46,28 @@ const QuizesPageItem = ({
       }
     });
   };
-
+  // Handler function to delete the question
+  const handleDelete = async () => {
+    try {
+      await deleteQuestion(id);
+      console.log(`Question with id ${id} deleted successfully.`);
+      // Optionally, add logic to remove the question from the UI or state after deletion
+      toast({
+        title: "Question deleted successfully!",
+        description: "The selected Question has been deleted.",
+      });
+    } catch (error) {
+      console.error("Failed to delete question:", error);
+      toast({
+        title: "Failed to delete Question",
+        description: (
+          <pre className="mt-2 w-[340px] rounded-md bg-red-500 p-4">
+            <code className="text-white">{JSON.stringify(error, null, 2)}</code>
+          </pre>
+        ),
+      });
+    }
+  };
   // // useEffect to log studentResponses after each update
   // useEffect(() => {
   //   console.log(studentResponses);
@@ -60,8 +85,16 @@ const QuizesPageItem = ({
             style={{ objectFit: "cover" }}
           />
           <p className="mt-2 text-base font-semibold">
-            Subject: {subject_title}
+            Question Subject: {subject_title}
           </p>
+          <div className="flex justify-around">
+            <Button variant="destructive" type="button" onClick={handleDelete}>
+              Delete question
+            </Button>
+            <Link href={`/admin/${id}`}>
+              <Button>Edit quesion</Button>
+            </Link>
+          </div>
         </CardHeader>
         <CardContent>
           <span>Difficulty degree </span>
