@@ -70,7 +70,7 @@ export const fetchQuizByGrade = async (
   return response.data;
 };
 
-//! get subjects 
+//! get-post subjects 
 export const fetchAllSubjects = async (): Promise<AllSubjects[]> => {
   const response = await axios.get("/api/subject/");
   // console.log(response);
@@ -81,17 +81,11 @@ export const fetchQuizBySubject = async (
   slug: string
 ): Promise<QuizResponse> => {
   try {
-    // console.log(
-    //   `/api/subject/${slug[0]}/?limit=${slug[1]}&offset=${
-    //     parseInt(slug[1], 10) - 10
-    //   }`
-    // );
     const response = await axios.get(
       `/api/subject/${slug[0]}/?limit=${slug[1]}&offset=${
         parseInt(slug[1], 10) - 10
       }`
     );
-
     return response.data;
   } catch (error: any) {
     if (error.response && error.response.status === 404) {
@@ -100,7 +94,22 @@ export const fetchQuizBySubject = async (
     throw error; // rethrow the error to be caught by your page component
   }
 };
+export const postCreateSubject = async (
+  formData: FormData // FormData object to send
+): Promise<any> => {
+  try {
+    const response = await axios.post("/api/subject/", formData, {
+      headers: {
+        "Content-Type": "multipart/form-data",
+      },
+    });
 
+    return response.data;
+  } catch (error) {
+    console.error("Failed to post subject", error);
+    throw error;
+  }
+};
 //! post-put-delete questions 
 export const postCreateQuestion = async (
   formData: FormData // FormData object to send
