@@ -30,7 +30,7 @@ export const navLinks = [
     icon: Contact,
   },
   {
-    label: "Add Question",
+    label: "Admin Page",
     route: "/admin",
     icon: ListPlus,
   },

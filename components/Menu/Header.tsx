@@ -1,6 +1,7 @@
 import React from 'react'
 import { Button } from '../ui/button'
 import Register from '../Auth/Register'
+import Login from '../Auth/Login'
 
 const Header = () => {
   return (
@@ -8,6 +9,7 @@ const Header = () => {
     dark:border-b-mycolor-400/30 h-16 mx-auto flex justify-end pr-2 items-center'>
         <div className='justify-end items-center'>
             {/* <Button variant="mybutton">Login</Button> */}
+            <Login/>
             <Register/>
 
 
