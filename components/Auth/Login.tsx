@@ -4,6 +4,7 @@ import React, { useState } from "react";
 import { Button } from "@/components/ui/button";
 import {
   Dialog,
+  DialogClose,
   DialogContent,
   DialogDescription,
   DialogFooter,
@@ -42,7 +43,7 @@ const Login = () => {
         console.log(data);
         const token = data.token; // Token'ı JSON verisinden al
         if (token) {
-          localStorage.setItem("token", token);
+          localStorage.setItem("user_data", data);
           toast({
             title: "User logined",
             description: "User registered successfully and token stored",
@@ -117,7 +118,9 @@ const Login = () => {
             </div>
           </div>
           <DialogFooter>
-            <Button type="submit">Submit</Button>
+            <DialogClose asChild>
+              <Button type="submit">Submit</Button>
+            </DialogClose>
           </DialogFooter>
         </form>
       </DialogContent>

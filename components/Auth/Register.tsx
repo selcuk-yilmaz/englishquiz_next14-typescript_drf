@@ -4,6 +4,7 @@ import React, { useState } from "react";
 import { Button } from "@/components/ui/button";
 import {
   Dialog,
+  DialogClose,
   DialogContent,
   DialogDescription,
   DialogFooter,
@@ -46,7 +47,7 @@ const Register = () => {
       console.log(response);
       if (response.ok) {
         const data = await response.json();
-        console.log(data)
+        console.log(data);
         const token = data.token; // Token'ı JSON verisinden al
         if (token) {
           localStorage.setItem("token", token);
@@ -188,7 +189,9 @@ const Register = () => {
             </div>
           </div>
           <DialogFooter>
-            <Button type="submit">Submit</Button>
+            <DialogClose asChild>
+              <Button type="submit">Submit</Button>
+            </DialogClose>
           </DialogFooter>
         </form>
       </DialogContent>
