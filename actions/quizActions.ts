@@ -29,15 +29,18 @@ export const postCreateLesson = async (
     throw error;
   }
 };
+
 export const fetchLessons = async (): Promise<Lessons[]> => {
 
   const response = await axios.get("/api/lesson/");
   // console.log(response);
   return response.data;
 };
+
 export const deleteLesson = async (id: number): Promise<void> => {
   await axios.delete(`/api/lesson/${id}/`);
 };
+
 //! post-get-delete grades
 export const postCreateGrade = async (
   formData: FormData // FormData object to send
@@ -55,14 +58,17 @@ export const postCreateGrade = async (
     throw error;
   }
 };
+
 export const fetchGrades = async (): Promise<Grade[]> => {
   const response = await axios.get("/api/grade/");
   // console.log(response);
   return response.data;
 };
+
 export const deleteGrade = async (id: number): Promise<void> => {
   await axios.delete(`/api/grade/detail/${id}/`);
 };
+
 export const fetchQuizByGrade = async (
   id: number
 ): Promise<SelectedGrade[]> => {
@@ -94,6 +100,7 @@ export const fetchQuizBySubject = async (
     throw error; // rethrow the error to be caught by your page component
   }
 };
+
 export const postCreateSubject = async (
   formData: FormData // FormData object to send
 ): Promise<any> => {
@@ -110,6 +117,7 @@ export const postCreateSubject = async (
     throw error;
   }
 };
+
 export const deleteSubject = async (id: number): Promise<void> => {
   await axios.delete(`/api/subject/detail/${id}/`);
 };
@@ -157,8 +165,6 @@ export const patchQuestion = async (
     throw error;
   }
 };
-
-
 //! post results for student responses to be for calculate
 interface StudentResType {
   id: number;

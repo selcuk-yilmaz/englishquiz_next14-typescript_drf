@@ -58,8 +58,8 @@ export const QuizProvider: React.FC<{ children: React.ReactNode }> = ({
     }
   };
 
-  console.log("studentResponses", studentResponses);
-  console.log("solvedTenQue", solvedTenQue);
+  // console.log("studentResponses", studentResponses);
+  // console.log("solvedTenQue", solvedTenQue);
   return (
     <QuizContext.Provider
       value={{

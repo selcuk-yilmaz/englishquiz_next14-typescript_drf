@@ -14,7 +14,9 @@ import {
 } from "@/components/ui/dialog";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
-import { toast } from "@/components/ui/use-toast";
+// import { toast } from "@/components/ui/use-toast";
+// import { createUser } from "@/actions/authActions";
+import { useAuthContext } from "@/context/AuthContext";
 
 const Register = () => {
   const [formData, setFormData] = useState({
@@ -26,6 +28,8 @@ const Register = () => {
     password2: "",
   });
 
+  const { registerContext } = useAuthContext();
+
   const [showPassword, setShowPassword] = useState(false); // Şifre görünürlüğü durumu
 
   const handleChange = (e: any) => {
@@ -36,44 +40,17 @@ const Register = () => {
     e.preventDefault();
     try {
       console.log(formData);
-      const response = await fetch(
-        "http://localhost:8000/users/auth/register/",
-        {
-          method: "POST",
-          headers: { "Content-Type": "application/json" },
-          body: JSON.stringify(formData),
-        }
-      );
-      console.log(response);
-      if (response.ok) {
-        const data = await response.json();
-        console.log(data);
-        const token = data.token; // Token'ı JSON verisinden al
-        if (token) {
-          localStorage.setItem("token", token);
-          toast({
-            title: "User registered",
-            description: "User registered successfully and token stored",
-          });
-        } else {
-          toast({
-            title: "Failed to Token",
-            description: "Token is missing in the response.",
-          });
-        }
+      registerContext(formData);
 
-        // Formu temizle
-        setFormData({
-          username: "",
-          first_name: "",
-          last_name: "",
-          email: "",
-          password: "",
-          password2: "",
-        });
-      } else {
-        console.log("Failed to register user");
-      }
+      // Formu temizle
+      setFormData({
+        username: "",
+        first_name: "",
+        last_name: "",
+        email: "",
+        password: "",
+        password2: ""
+      });
     } catch (error) {
       console.error("Error:", error);
     }

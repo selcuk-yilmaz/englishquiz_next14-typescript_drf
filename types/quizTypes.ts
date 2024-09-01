@@ -94,3 +94,9 @@ export interface CreateQuestion {
   number_of_options: number;
 }
 //! AUTH TYPES
+export interface User {
+  id: number;
+  name: string;
+  email: string;
+  // Diğer kullanıcı alanlarını buraya ekleyin
+}
