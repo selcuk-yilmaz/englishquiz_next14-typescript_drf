@@ -6,12 +6,10 @@ import React, { createContext, useContext, useState } from "react";
 
 interface AuthContextType {
   currentUser: User | boolean;
-  registerContext: (formData: any) => Promise<void>;
+  registerContext: (formData: any) => Promise<User | undefined>;
   loading: boolean;
   error: string | null;
-  // Add any other properties your context should provide
 }
-
 
 const url = "http://localhost:8000/";
 
@@ -34,25 +32,31 @@ export const AuthContext: React.FC<{ children: React.ReactNode }> = ({
   const [loading, setLoading] = useState<boolean>(false);
   const [error, setError] = useState<string | null>(null);
 
-  const registerContext = async (formData: any) => {
+  const registerContext = async (formData: any): Promise<User | undefined> => {
     setLoading(true);
     try {
-      const res = await axios.post(`${url}auth/register/`, formData);
+      const res = await axios.post(`${url}users/auth/register/`, formData);
       if (res.data.token) {
         setMyToken(res.data.token);
-        const userData = { ...res.data, token: "" };
+        const userData: User = { ...res.data, token: "" }; // Burada User tipini kullandık
         setCurrentUser(userData);
         sessionStorage.setItem("currentUser", JSON.stringify(userData));
         const token = window.btoa(res.data.token);
         sessionStorage.setItem("token", token);
+        setError(null); // Hata durumunu sıfırla
+
+        // Kullanıcı bilgilerini döndür
+        return userData;
       }
-      setError(null); // Reset error on successful registration
     } catch (error) {
       console.log(error);
-      setError("Registration failed"); // Set error state
+      setError("Registration failed"); // Hata durumunu ayarla
     } finally {
-      setLoading(false); // Stop loading when request is complete
+      setLoading(false); // Yükleme durumunu sonlandır
     }
+
+    // Hata durumunda veya token alınamadığında undefined döndür
+    return undefined;
   };
 
   const value: AuthContextType = {

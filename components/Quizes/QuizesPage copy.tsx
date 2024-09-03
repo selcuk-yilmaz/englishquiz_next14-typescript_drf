@@ -54,7 +54,7 @@ const QuizesPage: React.FC<BrowseProps> = async ({ slug }) => {
         type="application/ld+json"
         dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
       />
-      <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 2xl:grid-cols-4 gap-2 mt-2">
+      {/* <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 2xl:grid-cols-4 gap-2 mt-2">
         {quizData.map((question) => (
           <div key={question.id}>
             <QuizesPageItem
@@ -65,7 +65,7 @@ const QuizesPage: React.FC<BrowseProps> = async ({ slug }) => {
             />
           </div>
         ))}
-      </div>
+      </div> */}
       <div
         className="bg-mycolor-400 dark:bg-mycolor-100 border-b-2
     dark:border-b-mycolor-400/30 h-16 mx-auto flex justify-end pr-2 items-center"
