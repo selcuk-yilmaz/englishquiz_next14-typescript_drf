@@ -26,7 +26,7 @@ const QuizesPageItem = ({
   url,
   number_of_options,
 }: QuizesItemProps) => {
-  const { studentResponses, setStudentResponses } = useQuizContext();
+  const { studentResponses, setStudentResponses, user } = useQuizContext(); // Use user from context
 
   const handleAnswerSubmit = (data: { selectedOption: string }) => {
     setStudentResponses((prevResponses) => {
@@ -39,19 +39,22 @@ const QuizesPageItem = ({
         updatedResponses[existingResponseIndex] = {
           id,
           selectedOption: data.selectedOption,
+          user, // Include user in the response
         };
         return updatedResponses;
       } else {
-        return [...prevResponses, { id, selectedOption: data.selectedOption }];
+        return [
+          ...prevResponses,
+          { id, selectedOption: data.selectedOption, user },
+        ]; // Include user
       }
     });
   };
-  // Handler function to delete the question
+
   const handleDelete = async () => {
     try {
       await deleteQuestion(id);
       console.log(`Question with id ${id} deleted successfully.`);
-      // Optionally, add logic to remove the question from the UI or state after deletion
       toast({
         title: "Question deleted successfully!",
         description: "The selected Question has been deleted.",
@@ -68,10 +71,6 @@ const QuizesPageItem = ({
       });
     }
   };
-  // // useEffect to log studentResponses after each update
-  // useEffect(() => {
-  //   console.log(studentResponses);
-  // }, [studentResponses]); // Runs every time studentResponses changes
 
   return (
     <div className="col-span-1">
