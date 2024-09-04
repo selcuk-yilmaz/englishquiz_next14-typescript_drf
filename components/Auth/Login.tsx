@@ -1,6 +1,9 @@
 "use client";
 
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
+import { z } from "zod";
+import { zodResolver } from "@hookform/resolvers/zod";
+import { useForm } from "react-hook-form";
 import { Button } from "@/components/ui/button";
 import {
   Dialog,
@@ -12,61 +15,66 @@ import {
   DialogTitle,
   DialogTrigger,
 } from "@/components/ui/dialog";
+import {
+  Form,
+  FormControl,
+  FormDescription,
+  FormField,
+  FormItem,
+  FormLabel,
+  FormMessage,
+} from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
+import { useAuthContext } from "@/context/AuthContext";
 import { toast } from "@/components/ui/use-toast";
 
-const Login = () => {
-  const [formData, setFormData] = useState({
-    username: "",
-    password: "",
+// Zod validation schema
+const formSchema = z
+  .object({
+    username: z.string().min(2, { message: "Username is required." }),
+    password: z
+      .string()
+      .min(6, { message: "Password must be at least 6 characters." }),
+  })
+
+
+const Register = () => {
+  const { loginContext } = useAuthContext();
+  const [showPassword, setShowPassword] = useState(false);
+
+  // React Hook Form configuration
+  const form = useForm<z.infer<typeof formSchema>>({
+    resolver: zodResolver(formSchema),
+    defaultValues: {
+      username: "",
+      password: "",
+    },
   });
 
-  const [showPassword, setShowPassword] = useState(false); // Şifre görünürlüğü durumu
-
-  const handleChange = (e: any) => {
-    setFormData({ ...formData, [e.target.id]: e.target.value });
-  };
-
-  const handleSubmit = async (e: any) => {
-    e.preventDefault();
+  const onSubmit = async (data: z.infer<typeof formSchema>) => {
     try {
-      console.log(formData);
-      const response = await fetch("http://localhost:8000/users/auth/login/", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify(formData),
+      console.log("Form data submitted: ", data);
+      loginContext(data);
+
+      toast({
+        title: "Login process!",
+        description: "Login created successfully",
       });
-
-      if (response.ok) {
-        const data = await response.json();
-        console.log(data);
-        const token = data.token; // Token'ı JSON verisinden al
-        if (token) {
-          localStorage.setItem("user_data", data);
-          toast({
-            title: "User logined",
-            description: "User registered successfully and token stored",
-          });
-        } else {
-          toast({
-            title: "Failed to Token",
-            description: "Token is missing in the response.",
-          });
-        }
-
-        setFormData({
-          username: "",
-          password: "",
-        });
-      } else {
-        console.log("Failed to login user");
-      }
+      form.reset();
     } catch (error) {
-      console.error("Error:", error);
+      console.error("Error during Login:", error);
+      toast({
+        title: "Login process",
+        description: (
+          <pre className="mt-2 w-[340px] rounded-md bg-red-500 p-4">
+            <code className="text-white">{JSON.stringify(error, null, 2)}</code>
+          </pre>
+        ),
+      });
     }
   };
-
+  
   return (
     <Dialog>
       <DialogTrigger asChild>
@@ -80,52 +88,70 @@ const Login = () => {
             save when you are done.
           </DialogDescription>
         </DialogHeader>
-        <form onSubmit={handleSubmit}>
-          <div className="grid gap-4 py-4">
-            <div className="grid grid-cols-4 items-center gap-4">
-              <Label htmlFor="username" className="text-right">
-                Username
-              </Label>
-              <Input
-                id="username"
-                value={formData.username}
-                onChange={handleChange}
-                className="col-span-3"
+        <Form {...form}>
+          <form onSubmit={form.handleSubmit(onSubmit)}>
+            <div className="grid gap-4 py-4">
+              {/* Username Field */}
+
+              <FormField
+                control={form.control}
+                name="username"
+                render={({ field }) => (
+                  <FormItem>
+                    <FormLabel>Username</FormLabel>
+                    <FormControl>
+                      <Input placeholder="wanted Username" {...field} />
+                    </FormControl>
+                    <FormDescription>
+                      write the Username you want to add.
+                    </FormDescription>
+                    <FormMessage />
+                  </FormItem>
+                )}
+              />
+              {/* Password Field */}
+              <FormField
+                control={form.control}
+                name="password"
+                render={({ field }) => (
+                  <FormItem>
+                    <FormLabel htmlFor="password">Password</FormLabel>
+                    <FormControl>
+                      <div className="flex items-center">
+                        <Input
+                          {...field}
+                          placeholder="password"
+                          type={showPassword ? "text" : "password"}
+                          className="flex-1"
+                        />
+                        <Button
+                          type="button"
+                          variant="outline"
+                          className="ml-2"
+                          onClick={() => setShowPassword(!showPassword)}
+                        >
+                          {showPassword ? "Hide" : "Show"}
+                        </Button>
+                      </div>
+                    </FormControl>
+                    <FormDescription>
+                      Password must be at least 6 characters.
+                    </FormDescription>
+                    <FormMessage />
+                  </FormItem>
+                )}
               />
             </div>
-
-            <div className="grid grid-cols-4 items-center gap-4">
-              <Label htmlFor="password" className="text-right">
-                Password
-              </Label>
-              <div className="col-span-3 flex items-center">
-                <Input
-                  id="password"
-                  value={formData.password}
-                  onChange={handleChange}
-                  className="flex-1"
-                  type={showPassword ? "text" : "password"} // Şifre gösterme/gizleme durumu
-                />
-                <Button
-                  type="button"
-                  variant="outline"
-                  className="ml-2"
-                  onClick={() => setShowPassword(!showPassword)}
-                >
-                  {showPassword ? "Hide" : "Show"} {/* Toggle düğmesi */}
-                </Button>
-              </div>
-            </div>
-          </div>
-          <DialogFooter>
             <DialogClose asChild>
-              <Button type="submit">Submit</Button>
+              <DialogFooter>
+                <Button type="submit">Login</Button>
+              </DialogFooter>
             </DialogClose>
-          </DialogFooter>
-        </form>
+          </form>
+        </Form>
       </DialogContent>
     </Dialog>
   );
 };
 
-export default Login;
+export default Register;
