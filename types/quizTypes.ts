@@ -96,7 +96,11 @@ export interface CreateQuestion {
 //! AUTH TYPES
 export interface User {
   id: number;
-  name: string;
+  username: string;
   email: string;
-  // Diğer kullanıcı alanlarını buraya ekleyin
+  first_name: string;
+  last_name: string;
+  full_name: string;
+  is_staff: boolean;
+  is_superuser: boolean;
 }
