@@ -1,8 +1,5 @@
 import axios from "../utils/axiosInstance";
 import {
-  // Quiz,
-  // Question,
-  // Category,
   Questions,
   SelectedGrade,
   Grade,
@@ -172,13 +169,15 @@ interface StudentResType {
 }
 
 interface PostResponsesPayload {
+  user: string; // Kullanıcı kimliği
   studentResponses: StudentResType[];
 }
 
 export const postStudentResponses = async (
+  user: string,
   studentResponses: StudentResType[]
 ): Promise<any> => {
-  const payload: PostResponsesPayload = { studentResponses };
+  const payload: PostResponsesPayload = { user, studentResponses };
 
   try {
     const response = await axios.post("/api/results/", payload);

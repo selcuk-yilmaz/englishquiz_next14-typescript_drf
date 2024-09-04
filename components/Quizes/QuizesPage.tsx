@@ -7,6 +7,8 @@ import { useQuizContext } from "@/context/QuizContext";
 import { fetchQuizBySubject } from "@/actions/quizActions";
 import { QuizResponse } from "@/types/quizTypes";
 import Link from "next/link";
+import { useAuthContext } from "@/context/AuthContext";
+
 interface BrowseProps {
   slug: string;
 }
@@ -32,6 +34,12 @@ export async function generateMetadata({ params }: { params: BrowseProps }) {
 
 const QuizesPage: React.FC<BrowseProps> = ({ slug }) => {
   const { handleSubmitPost, setSolvedTenQue } = useQuizContext();
+  const { currentUser } = useAuthContext();
+  const user =
+    typeof currentUser !== "boolean" && currentUser.username
+      ? currentUser.username
+      : "Anonymous user";
+
   const [quizData, setQuizData] = useState<QuizResponse["results"]>([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
@@ -40,7 +48,6 @@ const QuizesPage: React.FC<BrowseProps> = ({ slug }) => {
     const loadQuizData = async () => {
       try {
         const data: QuizResponse = await fetchQuizBySubject(slug);
-        // console.log(data.results);
         setQuizData(data.results);
         setSolvedTenQue(data.results);
       } catch (err) {
@@ -52,7 +59,7 @@ const QuizesPage: React.FC<BrowseProps> = ({ slug }) => {
 
     loadQuizData();
   }, [slug, setSolvedTenQue]);
-  // console.log(quizData);
+
   if (loading) {
     return <div>Loading...</div>;
   }
@@ -86,7 +93,16 @@ const QuizesPage: React.FC<BrowseProps> = ({ slug }) => {
       >
         <div className="justify-end items-center">
           <Link href={"/score"}>
-            <Button variant="mybutton" onClick={handleSubmitPost}>
+            <Button
+              variant="mybutton"
+              onClick={() => {
+                if (user) {
+                  handleSubmitPost(user);
+                } else {
+                  console.error("User is not available");
+                }
+              }}
+            >
               Complete the Quiz
             </Button>
           </Link>

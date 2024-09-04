@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useState, useEffect } from "react";
+import React, { } from "react";
 import { Card, CardContent, CardHeader } from "@/components/ui/card";
 import Image from "next/image";
 import { Badge } from "@/components/ui/badge";
@@ -26,7 +26,7 @@ const QuizesPageItem = ({
   url,
   number_of_options,
 }: QuizesItemProps) => {
-  const { studentResponses, setStudentResponses, user } = useQuizContext(); // Use user from context
+  const {setStudentResponses} = useQuizContext(); // Use user from context
 
   const handleAnswerSubmit = (data: { selectedOption: string }) => {
     setStudentResponses((prevResponses) => {
@@ -39,14 +39,13 @@ const QuizesPageItem = ({
         updatedResponses[existingResponseIndex] = {
           id,
           selectedOption: data.selectedOption,
-          user, // Include user in the response
         };
         return updatedResponses;
       } else {
         return [
           ...prevResponses,
-          { id, selectedOption: data.selectedOption, user },
-        ]; // Include user
+          { id, selectedOption: data.selectedOption },
+        ];
       }
     });
   };
