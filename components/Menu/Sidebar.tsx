@@ -14,9 +14,13 @@ import NavLinks from "./NavLinks";
 import SocialMedia from "./SocialMedia";
 import { Badge } from "../ui/badge";
 import { Card, CardHeader } from "../ui/card";
+import { useAuthContext } from "@/context/AuthContext"; // AuthContext import edildi
+import { User } from "@/types/quizTypes";
 
 const Sidebar = () => {
   const pathname = usePathname();
+  const { currentUser } = useAuthContext() as { currentUser: User | null }; // User tipi uygulandı
+
   return (
     <aside
       className="hidden lg:flex h-screen w-72 bg-mycolor-400
@@ -47,22 +51,39 @@ const Sidebar = () => {
           <ul className="hidden md:flex w-full flex-col items-start gap-4 mt-14">
             {navLinks.map((link) => {
               const IsActive = link.route === pathname;
-
               const IconComponent = link.icon;
 
-              return (
-                <NavLinks
-                  key={link.route}
-                  IsActive={IsActive}
-                  icon={link.icon}
-                  label={link.label}
-                  route={link.route}
-                />
-              );
+              if (
+                currentUser &&
+                currentUser.is_staff &&
+                link.label.startsWith("Admin")
+              ) {
+                return (
+                  <NavLinks
+                    key={link.route}
+                    IsActive={IsActive}
+                    icon={link.icon}
+                    label={link.label}
+                    route={link.route}
+                  />
+                );
+              } else if (!link.label.startsWith("Admin")) {
+                return (
+                  <NavLinks
+                    key={link.route}
+                    IsActive={IsActive}
+                    icon={link.icon}
+                    label={link.label}
+                    route={link.route}
+                  />
+                );
+              }
+
+              return null; // Hiçbir koşula uymuyorsa null döndür
             })}
           </ul>
 
-          <ul className="hidden md:flex w-full  flex-wrap items-start gap-2">
+          <ul className="hidden md:flex w-full flex-wrap items-start gap-2">
             <div className="w-full relative">
               <Input className="w-full rounded-full" />
               <Button variant="link" className="absolute right-0 top-0">

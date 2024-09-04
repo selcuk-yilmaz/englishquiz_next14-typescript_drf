@@ -3,6 +3,7 @@
 import { User } from "@/types/quizTypes";
 import axios from "axios";
 import React, { createContext, useContext, useEffect, useState } from "react";
+import { toast } from "@/components/ui/use-toast";
 
 interface AuthContextType {
   currentUser: User | boolean;
@@ -10,6 +11,7 @@ interface AuthContextType {
   loginContext: (formData: any) => Promise<User | undefined>;
   loading: boolean;
   error: string | null;
+  logout: () => Promise<void>; // logout fonksiyonunun tipi eklendi
 }
 
 const url = "http://localhost:8000/";
@@ -27,7 +29,6 @@ export const AuthContext: React.FC<{ children: React.ReactNode }> = ({
   const [error, setError] = useState<string | null>(null);
 
   useEffect(() => {
-    // Tarayıcı ortamında olup olmadığınızı kontrol edin
     if (typeof window !== "undefined") {
       const storedUser = JSON.parse(
         sessionStorage.getItem("currentUser") || "false"
@@ -45,32 +46,29 @@ export const AuthContext: React.FC<{ children: React.ReactNode }> = ({
       const res = await axios.post(`${url}users/auth/register/`, formData);
       if (res.data.token) {
         const token = res.data.token;
-        const userData: User = { ...res.data, token: "" }; // Burada User tipini kullandık
+        const userData: User = { ...res.data, token: "" };
 
         setCurrentUser(userData);
         setMyToken(token);
 
-        // Tarayıcı ortamında sessionStorage kullanımı
         if (typeof window !== "undefined") {
           sessionStorage.setItem("currentUser", JSON.stringify(userData));
           sessionStorage.setItem("token", window.btoa(token));
         }
 
-        setError(null); // Hata durumunu sıfırla
+        setError(null);
 
-        // Kullanıcı bilgilerini döndür
         return userData;
       }
     } catch (error) {
       console.log(error);
-      setError("Registration failed"); // Hata durumunu ayarla
+      setError("Registration failed");
     } finally {
-      setLoading(false); // Yükleme durumunu sonlandır
+      setLoading(false);
     }
-
-    // Hata durumunda veya token alınamadığında undefined döndür
     return undefined;
   };
+
   const loginContext = async (formData: any): Promise<User | undefined> => {
     setLoading(true);
     try {
@@ -88,8 +86,34 @@ export const AuthContext: React.FC<{ children: React.ReactNode }> = ({
     } finally {
       setLoading(false);
     }
-
     return undefined;
+  };
+
+  const logout = async (): Promise<void> => {
+    try {
+      const config = {
+        method: "post",
+        url: `${url}users/auth/logout/`,
+        headers: {
+          Authorization: `Token ${myToken}`,
+        },
+      };
+      const res = await axios(config);
+      if (res.status === 200) {
+        setCurrentUser(false);
+        setMyToken("");
+        sessionStorage.clear();
+        toast({
+          title: "Log out!",
+          description: "User log out successfully.",
+        });
+      }
+    } catch (error: any) {
+      toast({
+        title: "Log out!",
+        description: error.message,
+      });
+    }
   };
 
   const value: AuthContextType = {
@@ -98,6 +122,7 @@ export const AuthContext: React.FC<{ children: React.ReactNode }> = ({
     loginContext,
     loading,
     error,
+    logout,
   };
 
   return (
