@@ -13,16 +13,17 @@ interface PanelGroupProps {
 
 // Map the quiz statuses to image URLs
 const statusImageMap: { [key: string]: string } = {
-  poor: "/images/poor.png", // You can replace with your actual image URLs
-  medium: "/images/medium.png",
-  normal: "/images/normal.png",
-  good: "/images/good.png",
-  perfect: "/images/perfect.png",
+  bad: "/images/resultQuiz/bad.jpeg",
+  poor: "/images/resultQuiz/poor.jpeg",
+  good: "/images/resultQuiz/good.jpeg",
+  better: "/images/resultQuiz/better.jpeg",
+  perfect: "/images/resultQuiz/perfect.jpeg",
 };
 
 export function PanelGroup({ quizScore }: PanelGroupProps) {
   // Get the image URL based on the quizScore.status, fallback to a default image if status is unknown
-  const imageUrl = statusImageMap[quizScore.status] || "/melo_avatar.jpg";
+  const imageUrl =
+    statusImageMap[quizScore.status] || "/images/resultQuiz/sorry.jpeg";
 
   return (
     <ResizablePanelGroup
@@ -55,7 +56,7 @@ export function PanelGroup({ quizScore }: PanelGroupProps) {
       <ResizableHandle />
       <ResizablePanel defaultSize={50}>
         <ResizablePanelGroup direction="vertical">
-          <ResizablePanel defaultSize={40}>
+          <ResizablePanel defaultSize={30}>
             {/* <div className="h-full w-full flex items-center justify-center  border-2 border-red-500 "> */}
             <Card>
               <CardHeader>
@@ -73,7 +74,7 @@ export function PanelGroup({ quizScore }: PanelGroupProps) {
             {/* </div> */}
           </ResizablePanel>
           <ResizableHandle />
-          <ResizablePanel defaultSize={60}>
+          <ResizablePanel defaultSize={70}>
             <div className="flex h-full w-full items-center justify-center">
               {/* <Card>
                 <CardHeader>

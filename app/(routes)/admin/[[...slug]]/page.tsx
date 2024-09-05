@@ -27,11 +27,11 @@ const AddQuestionPage = ({ params }: { params: { slug: number } }) => {
     <div className="flex justify-center items-center gap-2 mt-2">
       <ResizablePanelGroup
         direction="horizontal"
-        className="min-h-[200px] max-w-md rounded-lg border-2 border-red-500 md:min-w-full"
+        className="min-h-[200px] max-w-md rounded-lg md:min-w-full"
       >
         <ResizablePanel defaultSize={40}>
-          <div className="w-full h-full flex flex-col items-center justify-around gap-8 border-2 border-green-500">
-            <div className="flex w-full items-center justify-around border-2 gap-4  border-red-500">
+          <div className="w-full h-full flex flex-col items-center justify-around gap-8">
+            <div className="flex w-full items-center justify-around gap-4">
               <Card className="w-10/12 p-8">
                 <CardHeader>
                   <CardTitle className="flex justify-center items-center text-base font-semibold">
@@ -44,7 +44,7 @@ const AddQuestionPage = ({ params }: { params: { slug: number } }) => {
                 <CardFooter></CardFooter>
               </Card>
             </div>
-            <div className="flex w-full items-center justify-around border-2 gap-4  border-red-500">
+            <div className="flex w-full items-center justify-around gap-4 ">
               <Card className="w-10/12 p-8">
                 <CardHeader>
                   <CardTitle className="flex justify-center items-center text-base font-semibold">
@@ -61,8 +61,8 @@ const AddQuestionPage = ({ params }: { params: { slug: number } }) => {
         </ResizablePanel>
         <ResizableHandle withHandle />
         <ResizablePanel defaultSize={30}>
-          <div className="w-full h-full flex flex-col items-center justify-around gap-8 border-2 border-green-500">
-            <div className="flex w-full items-center justify-around border-2 gap-4  border-red-500">
+          <div className="w-full h-full flex flex-col items-center justify-around gap-8">
+            <div className="flex w-full items-center justify-around gap-4">
               <Card className="p-4">
                 <CardHeader>
                   <CardTitle className="flex justify-center items-center text-base font-semibold">
@@ -76,7 +76,7 @@ const AddQuestionPage = ({ params }: { params: { slug: number } }) => {
               </Card>
             </div>
 
-            <div className="flex w-full items-center justify-around border-2 gap-4  border-red-500">
+            <div className="flex w-full items-center justify-around gap-4">
               <Card className="p-4">
                 <CardHeader>
                   <CardTitle className="flex justify-center items-center text-base font-semibold">
@@ -90,7 +90,7 @@ const AddQuestionPage = ({ params }: { params: { slug: number } }) => {
               </Card>
             </div>
 
-            <div className="flex w-full items-center justify-around border-2 gap-4  border-red-500">
+            <div className="flex w-full items-center justify-around gap-4">
               <Card className="p-4">
                 <CardHeader>
                   <CardTitle className="flex justify-center items-center text-base font-semibold">
@@ -107,8 +107,8 @@ const AddQuestionPage = ({ params }: { params: { slug: number } }) => {
         </ResizablePanel>
         <ResizableHandle withHandle />
         <ResizablePanel defaultSize={30}>
-          <div className="w-full h-full flex flex-col items-center justify-around gap-8 border-2 border-green-500">
-            <div className="flex w-full items-center justify-around border-2 gap-4  border-red-500">
+          <div className="w-full h-full flex flex-col items-center justify-around gap-8">
+            <div className="flex w-full items-center justify-around gap-4">
               <Card className="p-2">
                 <CardHeader>
                   <CardTitle className="flex justify-center items-center text-base font-semibold">
@@ -122,7 +122,7 @@ const AddQuestionPage = ({ params }: { params: { slug: number } }) => {
               </Card>
             </div>
 
-            <div className="flex w-full items-center justify-around border-2 gap-4  border-red-500">
+            <div className="flex w-full items-center justify-around gap-4">
               <Card className="p-2">
                 <CardHeader>
                   <CardTitle className="flex justify-center items-center text-base font-semibold">
@@ -136,7 +136,7 @@ const AddQuestionPage = ({ params }: { params: { slug: number } }) => {
               </Card>
             </div>
 
-            <div className="flex w-full items-center justify-around border-2 gap-4  border-red-500">
+            <div className="flex w-full items-center justify-around gap-4">
               <Card className="p-2">
                 <CardHeader>
                   <CardTitle className="flex justify-center items-center text-base font-semibold">
