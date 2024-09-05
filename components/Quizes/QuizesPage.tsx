@@ -1,6 +1,7 @@
 "use client";
 
 import React, { useEffect, useState } from "react";
+import { redirect } from "next/navigation"; // redirect fonksiyonu import edildi
 import QuizesPageItem from "./QuizesPageItem";
 import { Button } from "../ui/button";
 import { useQuizContext } from "@/context/QuizContext";
@@ -8,6 +9,7 @@ import { fetchQuizBySubject } from "@/actions/quizActions";
 import { QuizResponse } from "@/types/quizTypes";
 import Link from "next/link";
 import { useAuthContext } from "@/context/AuthContext";
+import { toast } from "@/components/ui/use-toast";
 
 interface BrowseProps {
   slug: string;
@@ -60,6 +62,18 @@ const QuizesPage: React.FC<BrowseProps> = ({ slug }) => {
     loadQuizData();
   }, [slug, setSolvedTenQue]);
 
+  useEffect(() => {
+    if (!currentUser) {
+      toast({
+        title: "Kayıt ve login işlemlerini yapınız",
+        description: "Lütfen önce giriş yapınız veya kaydolunuz.",
+        variant: "destructive",
+        duration: 5000, // Toast'ın kaç milisaniye görüneceğini belirtir.
+      });
+      redirect("/"); // Ana sayfaya yönlendirme
+    }
+  }, [currentUser]); // Dependency array'ine router eklenmedi
+
   if (loading) {
     return <div>Loading...</div>;
   }
@@ -70,6 +84,10 @@ const QuizesPage: React.FC<BrowseProps> = ({ slug }) => {
         THIS QUIZ HAS NOT BEEN UPLOADED YET
       </div>
     );
+  }
+
+  if (!currentUser) {
+    return null; // Kullanıcı mevcut değilse içerik render edilmez
   }
 
   return (

@@ -10,6 +10,8 @@ import { Button } from "../ui/button";
 import Link from "next/link";
 import { deleteQuestion } from "@/actions/quizActions";
 import { toast } from "@/components/ui/use-toast";
+import { useAuthContext } from "@/context/AuthContext";
+import { User } from "@/types/quizTypes";
 
 interface QuizesItemProps {
   id: number;
@@ -26,7 +28,8 @@ const QuizesPageItem = ({
   url,
   number_of_options,
 }: QuizesItemProps) => {
-  const {setStudentResponses} = useQuizContext(); // Use user from context
+  const { setStudentResponses } = useQuizContext(); // Use user from context
+  const { currentUser } = useAuthContext() as { currentUser: User | null }; // User tipi uygulandı
 
   const handleAnswerSubmit = (data: { selectedOption: string }) => {
     setStudentResponses((prevResponses) => {
@@ -42,10 +45,7 @@ const QuizesPageItem = ({
         };
         return updatedResponses;
       } else {
-        return [
-          ...prevResponses,
-          { id, selectedOption: data.selectedOption },
-        ];
+        return [...prevResponses, { id, selectedOption: data.selectedOption }];
       }
     });
   };
@@ -85,14 +85,21 @@ const QuizesPageItem = ({
           <p className="mt-2 text-base font-semibold">
             Question Subject: {subject_title}
           </p>
-          <div className="flex justify-around">
-            <Button variant="destructive" type="button" onClick={handleDelete}>
-              Delete question
-            </Button>
-            <Link href={`/admin/${id}`}>
-              <Button>Edit quesion</Button>
-            </Link>
-          </div>
+
+          {currentUser && currentUser.is_staff && (
+            <div className="flex justify-around">
+              <Button
+                variant="destructive"
+                type="button"
+                onClick={handleDelete}
+              >
+                Delete question
+              </Button>
+              <Link href={`/admin/${id}`}>
+                <Button>Edit quesion</Button>
+              </Link>
+            </div>
+          )}
         </CardHeader>
         <CardContent>
           <span>Difficulty degree </span>
