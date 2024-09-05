@@ -37,10 +37,10 @@ const Sidebar = () => {
               height={160}
             />
           </Link>
-          <Card>
-            <CardHeader>
+          <Card className="flex justify-center pt-2 pb-2 mt-4">
+            {/* <CardHeader> */}
               <Badge>meltem teacher</Badge>
-            </CardHeader>
+            {/* </CardHeader> */}
           </Card>
           <div className="mt-6 text-center">
             <ModeToggle />
