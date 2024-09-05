@@ -16,7 +16,7 @@ const RoutesLayout = ({ children }: { children: React.ReactNode }) => {
             <Suspense fallback={<div>Loading...</div>}>
               <Header />
             </Suspense>
-            <div className="mx-auto px-5 w-full bg-white-image dark:bg-dark-image bg-cover bg-center bg-no-repeat">
+            <div className="mx-auto px-5 w-full bg-white-image dark:bg-dark-image bg-cover bg-center bg-no-repeat min-h-screen">
               {children}
             </div>
           </div>

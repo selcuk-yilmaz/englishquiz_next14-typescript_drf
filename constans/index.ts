@@ -6,6 +6,7 @@ import {
   FiLinkedin,
   FiTwitter,
 } from "react-icons/fi";
+import { FaXTwitter } from "react-icons/fa6";
 
 export const navLinks = [
   {
@@ -44,7 +45,7 @@ export const socialMedia = [
   },
   {
     route: "https://twitter.com/SelukYl10443090",
-    icon: FiTwitter,
+    icon: FaXTwitter,
   },
   {
     route: "https://github.com/selcuk-yilmaz",
